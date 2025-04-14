@@ -1,7 +1,10 @@
-import model.Task;
-import model.Epic;
-import model.Subtask;
-import model.TaskStatus;
+package tracker;
+
+import tracker.manager.TaskManager;
+import tracker.model.Task;
+import tracker.model.Epic;
+import tracker.model.Subtask;
+import tracker.model.TaskStatus;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,13 +31,13 @@ public class Main {
 
         // Печать всех задач
         System.out.println("Все задачи:");
-        System.out.println(manager.getTask());
+        System.out.println(manager.getTasks());
 
         System.out.println("\nВсе эпики:");
-        System.out.println(manager.getEpic());
+        System.out.println(manager.getEpics());
 
         System.out.println("\nВсе подзадачи:");
-        System.out.println(manager.getSubtask());
+        System.out.println(manager.getSubtasks());
 
         // Обновление статусов подзадач
         subtask1.setTaskStatus(TaskStatus.DONE);
@@ -45,19 +48,19 @@ public class Main {
 
         // Проверка пересчёта статуса эпика
         System.out.println("\nЭпики после обновления статусов подзадач:");
-        System.out.println(manager.getEpic());
+        System.out.println(manager.getEpics());
 
         // Удаление задачи и эпика
         manager.deleteTask(task1.getId());
         manager.deleteEpic(epic2.getId());
 
         System.out.println("\nВсе задачи после удаления:");
-        System.out.println(manager.getTask());
+        System.out.println(manager.getTasks());
 
         System.out.println("\nВсе эпики после удаления:");
-        System.out.println(manager.getEpic());
+        System.out.println(manager.getEpics());
 
         System.out.println("\nВсе подзадачи после удаления:");
-        System.out.println(manager.getSubtask());
+        System.out.println(manager.getSubtasks());
     }
 }
