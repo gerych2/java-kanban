@@ -1,6 +1,9 @@
-package tracker.model;
+package test;
 
 import org.junit.jupiter.api.Test;
+import tracker.model.Subtask;
+import tracker.model.TaskStatus;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SubtaskTest {

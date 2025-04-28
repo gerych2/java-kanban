@@ -1,12 +1,14 @@
-package tracker.model;
+package test;
 
 import org.junit.jupiter.api.Test;
+import tracker.model.Epic;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class EpicTest {
 
     @Test
-    void epicsWithSameIdShouldBeEqual() {
+    void epics_shouldBeEqual_whenIdIsSame() {
         Epic epic1 = new Epic("Epic1", "Desc1");
         epic1.setId(1);
         Epic epic2 = new Epic("Epic2", "Desc2");
@@ -16,7 +18,7 @@ class EpicTest {
     }
 
     @Test
-    void epicCannotContainItselfAsSubtask() {
+    void epic_shouldNotContainItselfAsSubtask() {
         Epic epic = new Epic("Epic", "Desc");
         epic.setId(1);
 

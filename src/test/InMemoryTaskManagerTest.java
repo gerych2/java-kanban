@@ -1,6 +1,7 @@
-package tracker.manager;
+package test;
 
 import org.junit.jupiter.api.Test;
+import tracker.manager.InMemoryTaskManager;
 import tracker.model.Task;
 import tracker.model.Epic;
 import tracker.model.Subtask;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
 
-    private final TaskManager manager = Managers.getDefault();
+    private final InMemoryTaskManager manager = new InMemoryTaskManager();
 
     @Test
     void shouldAddAndFindTask() {

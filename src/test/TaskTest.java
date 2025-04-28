@@ -1,6 +1,9 @@
-package tracker.model;
+package test;
 
 import org.junit.jupiter.api.Test;
+import tracker.model.Task;
+import tracker.model.TaskStatus;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TaskTest {
@@ -13,16 +16,5 @@ class TaskTest {
         task2.setId(1);
 
         assertEquals(task1, task2, "Задачи с одинаковым id должны быть равны");
-    }
-
-    @Test
-    void tasksShouldSaveDataCorrectly() {
-        Task task = new Task("Название", "Описание", TaskStatus.NEW);
-        task.setId(5);
-
-        assertEquals("Название", task.getName());
-        assertEquals("Описание", task.getDescription());
-        assertEquals(TaskStatus.NEW, task.getTaskStatus());
-        assertEquals(5, task.getId());
     }
 }

@@ -1,6 +1,10 @@
-package tracker.manager;
+package test;
 
 import org.junit.jupiter.api.Test;
+import tracker.manager.HistoryManager;
+import tracker.manager.Managers;
+import tracker.manager.TaskManager;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ManagersTest {
