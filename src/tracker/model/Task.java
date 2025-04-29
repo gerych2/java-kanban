@@ -2,7 +2,7 @@ package tracker.model;
 
 import java.util.Objects;
 
-public class Task {
+public class Task implements Cloneable {
     private String name;
     private String description;
     private Integer id;
@@ -47,19 +47,25 @@ public class Task {
     }
 
     @Override
+    public Task clone() {
+        try {
+            return (Task) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError("Cloning failed", e);
+        }
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(id, task.id) &&
-                Objects.equals(name, task.name) &&
-                Objects.equals(description, task.description) &&
-                taskStatus == task.taskStatus;
+        return Objects.equals(id, task.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, taskStatus);
+        return Objects.hash(id);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package tracker.model;
 
 public class Subtask extends Task {
-    private Integer epicId; // camelCase
+    private Integer epicId;
 
     public Subtask(String name, String description, TaskStatus taskStatus, Integer epicId) {
         super(name, description, taskStatus);
@@ -14,6 +14,13 @@ public class Subtask extends Task {
 
     public void setEpicId(Integer epicId) {
         this.epicId = epicId;
+    }
+
+    @Override
+    public Subtask clone() {
+        Subtask clone = (Subtask) super.clone();
+        clone.setEpicId(this.epicId);
+        return clone;
     }
 
     @Override

@@ -27,6 +27,13 @@ public class Epic extends Task {
     }
 
     @Override
+    public Epic clone() {
+        Epic clone = (Epic) super.clone();
+        clone.clearSubtasks(); // не переносим сабтаски в историю
+        return clone;
+    }
+
+    @Override
     public String toString() {
         return "Epic{" +
                 "name='" + getName() + '\'' +
