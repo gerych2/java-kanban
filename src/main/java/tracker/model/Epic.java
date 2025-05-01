@@ -1,7 +1,7 @@
-package tracker.model;
+package java.tracker.model;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 public class Epic extends Task {
     private final List<Integer> subtaskIds = new ArrayList<>();
@@ -29,7 +29,7 @@ public class Epic extends Task {
     @Override
     public Epic clone() {
         Epic clone = (Epic) super.clone();
-        clone.clearSubtasks(); // не переносим сабтаски в историю
+        clone.subtaskIds.addAll(this.subtaskIds);
         return clone;
     }
 

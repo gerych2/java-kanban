@@ -1,10 +1,10 @@
-package test.manager;
+package test.java.tracker.manager;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import tracker.manager.HistoryManager;
-import tracker.manager.Managers;
-import tracker.model.Task;
-import tracker.model.TaskStatus;
+import java.tracker.manager.history.InMemoryHistoryManager;
+import java.tracker.model.Task;
+import java.tracker.model.TaskStatus;
 
 import java.util.List;
 
@@ -12,7 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryHistoryManagerTest {
 
-    private final HistoryManager historyManager = Managers.getDefaultHistory();
+    private InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+
+
+    @BeforeEach
+    void setUp() {
+        historyManager = new InMemoryHistoryManager();
+    }
 
     @Test
     void shouldAddTaskToHistory() {

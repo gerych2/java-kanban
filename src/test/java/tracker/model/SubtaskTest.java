@@ -1,8 +1,8 @@
-package test.model;
+package test.java.tracker.model;
 
 import org.junit.jupiter.api.Test;
-import tracker.model.Subtask;
-import tracker.model.TaskStatus;
+import java.tracker.model.Subtask;
+import java.tracker.model.TaskStatus;
 
 import static org.junit.jupiter.api.Assertions.*;
 

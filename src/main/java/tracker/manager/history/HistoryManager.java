@@ -1,6 +1,6 @@
-package tracker.manager;
+package java.tracker.manager.history;
 
-import tracker.model.Task;
+import java.tracker.model.Task;
 import java.util.List;
 
 public interface HistoryManager {

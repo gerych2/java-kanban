@@ -1,13 +1,13 @@
-package tracker.manager;
-
-import tracker.model.Task;
-import tracker.model.Epic;
-import tracker.model.Subtask;
-import tracker.model.TaskStatus;
-
+package java.tracker.manager.task;
+import java.tracker.model.Task;
+import java.tracker.model.Epic;
+import java.tracker.model.Subtask;
+import java.tracker.model.TaskStatus;
+import java.tracker.manager.history.HistoryManager;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+
 
 public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Task> tasks = new HashMap<>();

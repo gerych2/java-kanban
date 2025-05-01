@@ -1,9 +1,9 @@
-package test.manager;
+package test.java.tracker.manager;
 
 import org.junit.jupiter.api.Test;
-import tracker.manager.HistoryManager;
-import tracker.manager.Managers;
-import tracker.manager.TaskManager;
+import java.tracker.manager.history.HistoryManager;
+import java.tracker.manager.task.Managers;
+import java.tracker.manager.task.TaskManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,10 +1,10 @@
-package tracker.manager;
+package java.tracker.manager.task;
 
-import tracker.model.Task;
-import tracker.model.Epic;
-import tracker.model.Subtask;
-
+import java.tracker.model.Task;
+import java.tracker.model.Epic;
+import java.tracker.model.Subtask;
 import java.util.List;
+
 
 public interface TaskManager {
 
