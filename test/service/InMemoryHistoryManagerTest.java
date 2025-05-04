@@ -1,10 +1,9 @@
-package test.java.tracker.manager;
+package service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.tracker.manager.history.InMemoryHistoryManager;
-import java.tracker.model.Task;
-import java.tracker.model.TaskStatus;
+import model.Task;
+import model.TaskStatus;
 
 import java.util.List;
 

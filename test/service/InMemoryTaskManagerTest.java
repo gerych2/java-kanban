@@ -1,11 +1,10 @@
-package test.java.tracker.manager;
+package service;
 
 import org.junit.jupiter.api.Test;
-import java.tracker.manager.task.InMemoryTaskManager;
-import java.tracker.model.Task;
-import java.tracker.model.Epic;
-import java.tracker.model.Subtask;
-import java.tracker.model.TaskStatus;
+import model.Task;
+import model.Epic;
+import model.Subtask;
+import model.TaskStatus;
 
 import java.util.List;
 

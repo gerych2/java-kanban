@@ -1,8 +1,8 @@
-package java.tracker.manager.task;
+package service;
 
-import java.tracker.model.Task;
-import java.tracker.model.Epic;
-import java.tracker.model.Subtask;
+import model.Task;
+import model.Epic;
+import model.Subtask;
 import java.util.List;
 
 

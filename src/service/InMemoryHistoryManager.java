@@ -1,6 +1,6 @@
-package java.tracker.manager.history;
+package service;
 
-import java.tracker.model.Task;
+import model.Task;
 import java.util.List;
 import java.util.ArrayList;
 

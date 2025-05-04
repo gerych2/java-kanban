@@ -1,7 +1,4 @@
-package java.tracker.manager.task;
-
-import java.tracker.manager.history.HistoryManager;
-import java.tracker.manager.history.InMemoryHistoryManager;
+package service;
 
 public class Managers {
 

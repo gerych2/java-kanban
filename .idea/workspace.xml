@@ -5,27 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5ae1de76-46a8-4588-b068-4d04be9aa3a4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/manager/InMemoryHistoryManagerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/manager/InMemoryTaskManagerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/manager/ManagersTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/model/EpicTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/model/SubtaskTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/model/TaskTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tracker/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tracker/manager/HistoryManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tracker/manager/InMemoryHistoryManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tracker/manager/InMemoryTaskManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tracker/manager/Managers.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tracker/manager/TaskManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tracker/model/Epic.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tracker/model/Subtask.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tracker/model/Task.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tracker/model/TaskStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/java-kanban.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/java-kanban.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tracker/manager/InMemoryHistoryManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/java/tracker/manager/InMemoryHistoryManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tracker/manager/InMemoryTaskManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/java/tracker/manager/InMemoryTaskManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tracker/manager/ManagersTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/java/tracker/manager/ManagersTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tracker/model/EpicTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/java/tracker/model/EpicTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tracker/model/SubtaskTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/java/tracker/model/SubtaskTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tracker/model/TaskTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/java/tracker/model/TaskTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,33 +42,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "true",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "create.test.in.the.same.root": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/project_52_german/unik java/sprint4",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/project_52_german/unik java/sprint4/java-kanban&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\project_52_german\unik java\sprint4\java-kanban\src" />
       <recent name="D:\project_52_german\unik java\sprint4\java-kanban\src\main\tracker\manager\task" />
       <recent name="D:\project_52_german\unik java\sprint4\java-kanban\src\main\tracker\manager\history" />
       <recent name="D:\project_52_german\unik java\sprint4\java-kanban\src\test\java\tracker" />
@@ -91,21 +79,6 @@
       <recent name="tracker.manager" />
       <recent name="tracker.model" />
     </key>
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="java-kanban" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="java-kanban" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -133,6 +106,8 @@
       <workItem from="1746046473536" duration="67000" />
       <workItem from="1746046861041" duration="3680000" />
       <workItem from="1746093366405" duration="14000" />
+      <workItem from="1746093540110" duration="5106000" />
+      <workItem from="1746355262716" duration="904000" />
     </task>
     <servers />
   </component>

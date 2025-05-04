@@ -1,9 +1,9 @@
-package java.tracker.manager.task;
-import java.tracker.model.Task;
-import java.tracker.model.Epic;
-import java.tracker.model.Subtask;
-import java.tracker.model.TaskStatus;
-import java.tracker.manager.history.HistoryManager;
+package service;
+import model.Task;
+import model.Epic;
+import model.Subtask;
+import model.TaskStatus;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;

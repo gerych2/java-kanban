@@ -1,7 +1,7 @@
-package test.java.tracker.model;
+package model;
 
 import org.junit.jupiter.api.Test;
-import java.tracker.model.Epic;
+import model.Epic;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,4 +1,4 @@
-package java.tracker.model;
+package model;
 
 import java.util.Objects;
 
@@ -38,11 +38,11 @@ public class Task implements Cloneable {
         this.description = description;
     }
 
-    public java.tracker.model.TaskStatus getTaskStatus() {
+    public TaskStatus getTaskStatus() {
         return taskStatus;
     }
 
-    public void setTaskStatus(java.tracker.model.TaskStatus taskStatus) {
+    public void setTaskStatus(TaskStatus taskStatus) {
         this.taskStatus = taskStatus;
     }
 
