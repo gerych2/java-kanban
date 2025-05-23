@@ -6,6 +6,7 @@ import java.util.List;
 public class HandLinkedList<T> {
 
     private Node<T> head;
+
     private Node<T> tail;
 
     public Node<T> addLast(T element) {

@@ -5,7 +5,9 @@ import model.Task;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
+
     private final HandLinkedList<Task> list = new HandLinkedList<>();
+
     private final Map<Integer, Node<Task>> mapHistory = new HashMap<>();
 
     @Override
