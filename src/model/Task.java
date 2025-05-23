@@ -55,19 +55,18 @@ public class Task {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Task task)) return false;
-        return id == task.id &&
-                Objects.equals(name, task.name) &&
-                status == task.status &&
-                Objects.equals(description, task.description);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return id == task.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, status, description);
+        return Objects.hash(id);
     }
+
 
     @Override
     public String toString() {
