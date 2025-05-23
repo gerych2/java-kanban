@@ -59,14 +59,13 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id;
+        return Objects.equals(id, task.id) && Objects.equals(name, task.name) && status == task.status && Objects.equals(description, task.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, name, status, description);
     }
-
 
     @Override
     public String toString() {
