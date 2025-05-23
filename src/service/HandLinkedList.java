@@ -20,18 +20,6 @@ public class HandLinkedList<T> {
         return newNode;
     }
 
-    public void clear() {
-        Node<T> current = head;
-        while (current != null) {
-            Node<T> next = current.getNext();
-            current.setNext(null);
-            current.setPrev(null);
-            current = next;
-        }
-        head = null;
-        tail = null;
-    }
-
     public List<T> getDataHistory() {
         List<T> history = new ArrayList<>();
         for (Node<T> current = head; current != null; current = current.getNext()) {

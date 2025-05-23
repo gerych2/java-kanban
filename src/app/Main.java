@@ -1,37 +1,49 @@
 package app;
 
-import model.*;
+import model.Epic;
+import model.TaskStatus;
+import model.Subtask;
+import model.Task;
 import service.Managers;
 import service.TaskManager;
 
 public class Main {
     public static void main(String[] args) {
-        TaskManager manager = Managers.getDefault();
+        Task taskA = new Task("Clean room", "Vacuum and dust", TaskStatus.NEW);
+        Task taskB = new Task("Do laundry", "Wash and fold clothes", TaskStatus.NEW);
 
-        Task task1 = new Task("task1", "descriptionForTask1", TaskStatus.NEW);
-        Task task2 = new Task("task2", "descriptionForTask2", TaskStatus.NEW);
+        Epic epicAlpha = new Epic("Vacation Planning", "Plan trip to mountains");
+        Epic epicBeta = new Epic("Birthday Event", "Organize birthday party");
 
-        Epic epic1 = new Epic("epic1", "descriptionForEpic1");
-        Epic epic2 = new Epic("epic2", "descriptionForEpic2");
+        Subtask subAlpha1 = new Subtask("Book hotel", "Reserve a room for 3 nights", TaskStatus.NEW,
+                1001, epicAlpha);
+        Subtask subAlpha2 = new Subtask("Pack bags", "Prepare clothes and equipment", TaskStatus.NEW,
+                1002, epicAlpha);
+        Subtask subAlpha3 = new Subtask("Buy snacks", "Purchase food for road", TaskStatus.NEW,
+                1003, epicAlpha);
 
-        Subtask subtask1 = new Subtask("subtask1", "descriptionForSubtask1", TaskStatus.NEW, 5, epic1);
-        Subtask subtask2 = new Subtask("subtask2", "descriptionForSubtask2", TaskStatus.NEW, 6, epic1);
-        Subtask subtask3 = new Subtask("subtask3", "descriptionForSubtask3", TaskStatus.NEW, 7, epic1);
+        TaskManager taskManager = Managers.getDefault();
 
-        manager.addNewTask(task1);
-        manager.addNewTask(task2);
+        taskManager.addNewTask(taskA);
+        taskManager.addNewEpic(epicAlpha);
+        taskManager.addNewSubtask(subAlpha1);
+        taskManager.addNewTask(taskB);
+        taskManager.addNewEpic(epicBeta);
+        taskManager.addNewSubtask(subAlpha2);
+        taskManager.addNewSubtask(subAlpha3);
 
-        manager.addNewEpic(epic1);
-        manager.addNewEpic(epic2);
+        taskManager.searchEpicById(epicAlpha.getId());
+        taskManager.searchSubtaskById(subAlpha2.getId());
+        taskManager.searchTaskById(taskB.getId());
+        taskManager.searchTaskById(taskA.getId());
+        taskManager.searchTaskById(taskA.getId());
+        taskManager.searchEpicById(epicAlpha.getId());
+        taskManager.searchEpicById(epicBeta.getId());
 
-        manager.addNewSubtask(subtask1);
-        manager.addNewSubtask(subtask2);
-        manager.addNewSubtask(subtask3);
-
-        System.out.println("All tasks: " + manager.getTasks());
-        System.out.println("All epics: " + manager.getEpics());
-        System.out.println("All subtasks: " + manager.getSubtasks());
-
-        System.out.println("History: " + manager.getHistory());
+        System.out.println(taskManager.getHistory());
+        taskManager.removeTaskById(taskA.getId());
+        System.out.println(taskManager.getHistory());
+        taskManager.removeEpicById(epicAlpha.getId());
+        System.out.println(taskManager.getHistory());
     }
 }

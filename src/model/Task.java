@@ -4,30 +4,70 @@ import java.util.Objects;
 
 public class Task {
 
-    private int id;
+    private Integer id;
+
     private String name;
+
     private TaskStatus status;
+
     private String description;
 
-    private static int currentId = 0;
-
     public Task(String nameOfTask, String description) {
-        this(nameOfTask, description, TaskStatus.NEW, generateId());
+        this(nameOfTask, description, TaskStatus.NEW, createNewId());
     }
 
-    public Task(String nameOfTask, String description, TaskStatus status) {
-        this(nameOfTask, description, status, generateId());
+    public Task(String nameOFTask, String description, TaskStatus status) {
+        this(nameOFTask, description, status, createNewId());
     }
 
-    public Task(String nameOfTask, String description, TaskStatus status, int taskId) {
-        this.name = nameOfTask;
+
+    public Task(String nameOFTask, String description, TaskStatus status, int taskId) {
+        this.name = nameOFTask;
         this.description = description;
         this.status = status;
         this.id = taskId;
     }
 
-    private static int generateId() {
-        return ++currentId;
+    private static int currentId = 0;
+
+    private static int createNewId() {
+        currentId++;
+        return currentId;
+    }
+
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        Task task = (Task) object;
+        return id == task.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+    public String toString() {
+        String result = "name={" + this.name + "} id={" + this.id + "} description={" + this.description + "} Status={" +
+                this.status + "}";
+        return result;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {
@@ -38,39 +78,11 @@ public class Task {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
     public TaskStatus getStatus() {
         return status;
     }
 
     public void setStatus(TaskStatus status) {
         this.status = status;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-        return id == task.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-
-    @Override
-    public String toString() {
-        return String.format("Task{id=%d, name='%s', status=%s, description='%s'}",
-                id, name, status, description);
     }
 }

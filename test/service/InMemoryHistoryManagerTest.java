@@ -1,91 +1,87 @@
 package service;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import model.Epic;
-import model.TaskStatus;
 import model.Subtask;
 import model.Task;
+import model.TaskStatus;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class InMemoryHistoryManagerTest {
-
-    private TaskManager manager;
-    private List<Task> expected;
+    private static TaskManager manager;
+    private static List<Task> expected;
 
     @BeforeEach
-    void setUp() {
+    public void setupHistory() {
         manager = Managers.getDefault();
         expected = new ArrayList<>();
 
-        Task task1 = new Task("Task1", "Desc1", TaskStatus.NEW, 1);
-        Task task2 = new Task("Task2", "Desc2", TaskStatus.NEW, 2);
-        Task task3 = new Task("Task3", "Desc3", TaskStatus.NEW, 3);
-        Task task4 = new Task("Task4", "Desc4", TaskStatus.NEW, 4);
-        Task task5 = new Task("Task5", "Desc5", TaskStatus.NEW, 5);
-        Task task6 = new Task("Task6", "Desc6", TaskStatus.NEW, 6);
+        Task a = new Task("Buy groceries", "Milk and eggs", TaskStatus.NEW, 10);
+        Task b = new Task("Call mom", "Weekly check-in", TaskStatus.NEW, 11);
+        Task c = new Task("Read book", "Finish chapter 4", TaskStatus.NEW, 12);
+        Task d = new Task("Workout", "Cardio session", TaskStatus.NEW, 13);
+        Task e = new Task("Code review", "Check PRs", TaskStatus.NEW, 14);
+        Task f = new Task("Send email", "To client about updates", TaskStatus.NEW, 15);
 
-        manager.addNewTask(task1);
-        manager.addNewTask(task2);
-        manager.addNewTask(task3);
-        manager.addNewTask(task4);
-        manager.addNewTask(task5);
-        manager.addNewTask(task6);
+        manager.addNewTask(a);
+        manager.addNewTask(b);
+        manager.addNewTask(c);
+        manager.addNewTask(d);
+        manager.addNewTask(e);
+        manager.addNewTask(f);
 
-        Epic epic1 = new Epic("Epic1", "EpicDesc1", 10);
-        Epic epic2 = new Epic("Epic2", "EpicDesc2", 11);
-        Subtask sub1 = new Subtask("Sub1", "S1", TaskStatus.NEW, 101, epic1);
-        Subtask sub2 = new Subtask("Sub2", "S2", TaskStatus.NEW, 102, epic1);
-        Subtask sub3 = new Subtask("Sub3", "S3", TaskStatus.NEW, 103, epic2);
+        Epic epicA = new Epic("Launch project", "Release MVP", 100);
+        Epic epicB = new Epic("Plan event", "Set venue and invite guests", 101);
 
-        manager.addNewEpic(epic1);
-        manager.addNewEpic(epic2);
-        manager.addNewSubtask(sub1);
-        manager.addNewSubtask(sub2);
-        manager.addNewSubtask(sub3);
+        Subtask sa = new Subtask("Setup CI", "Integrate Jenkins", TaskStatus.NEW, 102, epicA);
+        Subtask sb = new Subtask("Write script", "Opening remarks", TaskStatus.NEW, 103, epicA);
+        Subtask sc = new Subtask("Book speakers", "Invite experts", TaskStatus.NEW, 104, epicB);
 
-        manager.searchTaskById(1);
-        manager.searchTaskById(2);
-        manager.searchTaskById(3);
-        manager.searchTaskById(4);
-        manager.searchTaskById(5);
-        manager.searchEpicById(10);
+        manager.addNewEpic(epicA);
+        manager.addNewEpic(epicB);
+        manager.addNewSubtask(sa);
+        manager.addNewSubtask(sb);
+        manager.addNewSubtask(sc);
 
-        expected.add(task1);
-        expected.add(task2);
-        expected.add(task3);
-        expected.add(task4);
-        expected.add(task5);
-        expected.add(epic1);
+        manager.searchTaskById(10);
+        manager.searchTaskById(11);
+        manager.searchTaskById(12);
+        manager.searchTaskById(13);
+        manager.searchTaskById(14);
+        manager.searchEpicById(100);
+
+        expected.add(a);
+        expected.add(b);
+        expected.add(c);
+        expected.add(d);
+        expected.add(e);
+        expected.add(epicA);
     }
 
     @Test
-    void shouldCorrectlyAddToHistory() {
-        assertEquals(expected, manager.getHistory(),
-                "История добавляется некорректно или не добавляется вовсе");
+    public void shouldCorrectlyTrackHistory() {
+        Assertions.assertEquals(expected, manager.getHistory(),
+                "History tracking is incorrect or incomplete");
     }
 
     @Test
-    void shouldRemoveDuplicateWhenReAccessed() {
-        // перемещаем task1 в конец
-        manager.searchTaskById(1);
+    public void shouldHandleDuplicateEntriesCorrectly() {
+        manager.searchTaskById(10);
         expected.removeFirst();
-        expected.add(new Task("Task1", "Desc1", TaskStatus.NEW, 1));
-        assertEquals(expected, manager.getHistory(), "Неправильное удаление повтора в начале");
+        expected.add(new Task("Buy groceries", "Milk and eggs", TaskStatus.NEW, 10));
+        Assertions.assertEquals(expected, manager.getHistory(), "Failed to move duplicate from beginning");
 
-        // перемещаем task3
-        manager.searchTaskById(3);
-        Task task3 = new Task("Task3", "Desc3", TaskStatus.NEW, 3);
-        expected.remove(task3);
-        expected.add(task3);
-        assertEquals(expected, manager.getHistory(), "Неправильное удаление дубля в середине");
+        manager.searchTaskById(12);
+        Task duplicate = new Task("Read book", "Finish chapter 4", TaskStatus.NEW, 12);
+        expected.remove(duplicate);
+        expected.add(duplicate);
+        Assertions.assertEquals(expected, manager.getHistory(), "Failed to move middle duplicate");
 
-        // повторный доступ к task3 (уже в конце)
-        manager.searchTaskById(3);
-        assertEquals(expected, manager.getHistory(), "Неправильное поведение при повторном доступе к последнему");
+        manager.searchTaskById(12);
+        Assertions.assertEquals(expected, manager.getHistory(), "Failed to handle tail duplicate");
     }
 }
