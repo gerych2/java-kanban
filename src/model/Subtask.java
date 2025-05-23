@@ -1,36 +1,37 @@
 package model;
 
 public class Subtask extends Task {
-    private Integer epicId;
 
-    public Subtask(String name, String description, TaskStatus taskStatus, Integer epicId) {
-        super(name, description, taskStatus);
-        this.epicId = epicId;
+    private int idEpic;
+
+    public Subtask(String nameOfSubtask, String description, Epic epic) {
+        super(nameOfSubtask, description);
+        setIdEpic(epic);
     }
 
-    public Integer getEpicId() {
-        return epicId;
+    public Subtask(String nameOfSubtask, String description, TaskStatus status) {
+        super(nameOfSubtask, description);
+        setStatus(status);
     }
 
-    public void setEpicId(Integer epicId) {
-        this.epicId = epicId;
+    public Subtask(String nameOfSubtask, String description, TaskStatus status, int subtaskId) {
+        this(nameOfSubtask, description, status);
+        setId(subtaskId);
     }
 
-    @Override
-    public Subtask clone() {
-        Subtask clone = (Subtask) super.clone();
-        clone.setEpicId(this.epicId);
-        return clone;
+    public Subtask(String nameOfSubtask, String description, TaskStatus status, int subtaskId, Epic epic) {
+        super(nameOfSubtask, description, status);
+        setId(subtaskId);
+        setIdEpic(epic);
     }
 
-    @Override
-    public String toString() {
-        return "Subtask{" +
-                "name='" + getName() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", id=" + getId() +
-                ", taskStatus=" + getTaskStatus() +
-                ", epicId=" + epicId +
-                '}';
+    public int getEpicId() {
+        return idEpic;
+    }
+
+    public void setIdEpic(Epic epic) {
+        if (epic != null) {
+            this.idEpic = epic.getId();
+        }
     }
 }

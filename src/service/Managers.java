@@ -2,8 +2,13 @@ package service;
 
 public class Managers {
 
+    private Managers() {
+        // Приватный конструктор предотвращает создание экземпляра
+    }
+
     public static TaskManager getDefault() {
-        return new InMemoryTaskManager();
+        HistoryManager history = getDefaultHistory();
+        return new InMemoryTaskManager(history);
     }
 
     public static HistoryManager getDefaultHistory() {

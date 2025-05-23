@@ -1,9 +1,10 @@
 package service;
 
 import model.Task;
-import java.util.List;
+import java.util.Collection;
 
 public interface HistoryManager {
-    void add(Task task);           // Добавить задачу в историю
-    List<Task> getHistory();       // Получить всю историю
+    void add(Task task);
+    Collection<Task> getHistory();
+    void remove(int id);
 }

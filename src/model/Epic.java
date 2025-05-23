@@ -1,46 +1,44 @@
 package model;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class Epic extends Task {
+
     private final List<Integer> subtaskIds = new ArrayList<>();
+    private final TaskStatus status;
 
-    public Epic(String name, String description) {
-        super(name, description, TaskStatus.NEW);
+    public Epic(String nameOfEpic, String description) {
+        super(nameOfEpic, description);
+        this.status = TaskStatus.NEW;
     }
 
-    public List<Integer> getSubtaskIds() {
-        return subtaskIds;
+    public Epic(String nameOfEpic, String description, int id) {
+        super(nameOfEpic, description);
+        this.setId(id);
+        this.status = TaskStatus.NEW;
     }
 
-    public void addSubtask(Integer subtaskId) {
+    @Override
+    public void setStatus(TaskStatus status) {
+        System.out.println("Нельзя менять статус Epic'a напрямую");
+    }
+
+    @Override
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void addSubtask(int subtaskId) {
         subtaskIds.add(subtaskId);
     }
 
-    public void removeSubtask(Integer subtaskId) {
-        subtaskIds.remove(subtaskId);
+    public void removeSubtask(int subtaskId) {
+        subtaskIds.remove((Integer) subtaskId);
     }
 
-    public void clearSubtasks() {
-        subtaskIds.clear();
-    }
-
-    @Override
-    public Epic clone() {
-        Epic clone = (Epic) super.clone();
-        clone.subtaskIds.addAll(this.subtaskIds);
-        return clone;
-    }
-
-    @Override
-    public String toString() {
-        return "Epic{" +
-                "name='" + getName() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", id=" + getId() +
-                ", taskStatus=" + getTaskStatus() +
-                ", subtaskIds=" + subtaskIds +
-                '}';
+    public Collection<Integer> getSubtaskIds() {
+        return new ArrayList<>(subtaskIds);
     }
 }

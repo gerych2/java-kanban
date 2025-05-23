@@ -11,6 +11,25 @@ public interface TaskManager {
     // Методы для обычных задач
     void addTask(Task task);
     Task getTask(int id);
+
+    boolean addNewTask(Task newTask);
+
+    boolean addNewEpic(Epic newEpic);
+
+    boolean addNewSubtask(Subtask newSubtask);
+
+    Task getTaskById(int id);
+
+    Epic getEpicById(int id);
+
+    Subtask getSubtaskById(int id);
+
+    Task searchTaskById(int id);
+
+    Epic searchEpicById(int id);
+
+    Subtask searchSubtaskById(int id);
+
     List<Task> getTasks();
     void updateTask(Task task);
     void deleteTask(int id);
@@ -37,4 +56,10 @@ public interface TaskManager {
 
     // Получить историю просмотров задач
     List<Task> getHistory();
+
+    void removeTaskById(int id);
+
+    void removeEpicById(int id);
+
+    void removeSubtaskById(int id);
 }

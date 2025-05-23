@@ -2,23 +2,39 @@ package model;
 
 import java.util.Objects;
 
-public class Task implements Cloneable {
-    private String name;
-    private String description;
-    private Integer id;
-    private TaskStatus taskStatus;
+public class Task {
 
-    public Task(String name, String description, TaskStatus taskStatus) {
-        this.name = name;
-        this.description = description;
-        this.taskStatus = taskStatus;
+    private int id;
+    private String name;
+    private TaskStatus status;
+    private String description;
+
+    private static int currentId = 0;
+
+    public Task(String nameOfTask, String description) {
+        this(nameOfTask, description, TaskStatus.NEW, generateId());
     }
 
-    public Integer getId() {
+    public Task(String nameOfTask, String description, TaskStatus status) {
+        this(nameOfTask, description, status, generateId());
+    }
+
+    public Task(String nameOfTask, String description, TaskStatus status, int taskId) {
+        this.name = nameOfTask;
+        this.description = description;
+        this.status = status;
+        this.id = taskId;
+    }
+
+    private static int generateId() {
+        return ++currentId;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -26,55 +42,36 @@ public class Task implements Cloneable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public TaskStatus getStatus() {
+        return status;
     }
 
-    public TaskStatus getTaskStatus() {
-        return taskStatus;
-    }
-
-    public void setTaskStatus(TaskStatus taskStatus) {
-        this.taskStatus = taskStatus;
+    public void setStatus(TaskStatus status) {
+        this.status = status;
     }
 
     @Override
-    public Task clone() {
-        try {
-            return (Task) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException("Clone not supported", e);
-        }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-        return Objects.equals(id, task.id);
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Task task)) return false;
+        return id == task.id &&
+                Objects.equals(name, task.name) &&
+                status == task.status &&
+                Objects.equals(description, task.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, name, status, description);
     }
 
     @Override
     public String toString() {
-        return "Task{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", id=" + id +
-                ", taskStatus=" + taskStatus +
-                '}';
+        return String.format("Task{id=%d, name='%s', status=%s, description='%s'}",
+                id, name, status, description);
     }
 }
