@@ -10,6 +10,7 @@ public interface TaskManager {
 
     // Методы для обычных задач
     void addTask(Task task);
+
     Task getTask(int id);
 
     boolean addNewTask(Task newTask);
@@ -37,7 +38,7 @@ public interface TaskManager {
     void deleteTask(int id);
 
     void removeAllTasks();
-    // Методы для эпиков
+
     void addEpic(Epic epic);
 
     Epic getEpic(int id);
@@ -73,6 +74,6 @@ public interface TaskManager {
 
     void removeEpicById(int id);
 
-
     void removeSubtaskById(int id);
+
 }
