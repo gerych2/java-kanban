@@ -1,40 +1,52 @@
 package service;
 
-import model.Task;
 import model.Epic;
 import model.Subtask;
-import java.util.List;
+import model.Task;
 
+import java.util.Collection;
+import java.util.Map;
 
 public interface TaskManager {
+    boolean addNewTask(Task newTask);
 
-    // Методы для обычных задач
-    void addTask(Task task);
-    Task getTask(int id);
-    List<Task> getTasks();
-    void updateTask(Task task);
-    void deleteTask(int id);
-    void removeAllTasks();
+    boolean addNewEpic(Epic newEpic);
 
-    // Методы для эпиков
-    void addEpic(Epic epic);
-    Epic getEpic(int id);
-    List<Epic> getEpics();
-    void updateEpic(Epic epic);
-    void deleteEpic(int id);
-    void removeAllEpics();
+    boolean addNewSubtask(Subtask newSubtask);
 
-    // Методы для подзадач
-    void addSubtask(Subtask subtask);
-    Subtask getSubtask(int id);
-    List<Subtask> getSubtasks();
-    void updateSubtask(Subtask subtask);
-    void deleteSubtask(int id);
-    void removeAllSubtasks();
+    Map<Integer, Task> showUpTask();
 
-    // Получить все подзадачи эпика
-    List<Subtask> getEpicSubtasks(int epicId);
+    Map<Integer, Epic> showUpEpic();
 
-    // Получить историю просмотров задач
-    List<Task> getHistory();
+    Map<Integer, Subtask> showUpSubtask();
+
+    void removeAllTask();
+
+    void removeAllSubtask();
+
+    void removeAllEpic();
+
+    void removeTaskById(int id);
+
+    void removeEpicById(int id);
+
+    void removeSubtaskById(int id);
+
+    Task searchTaskById(int id);
+
+    Epic searchEpicById(int id);
+
+    Subtask searchSubtaskById(int id);
+
+    void updateTask(Task oldTask, Task newTask);
+
+    void updateSubtask(Subtask oldSubtask, Subtask newSubtask);
+
+    void updateEpic(Epic oldEpic, Epic newEpic);
+
+    Collection<Subtask> listSubtaskOfEpic(Epic foundEpic);
+
+    Collection<Task> getHistory();
+
+
 }

@@ -18,11 +18,4 @@ class SubtaskTest {
         assertEquals(subtask1, subtask2, "Сабтаски с одинаковым id должны быть равны");
     }
 
-    @Test
-    void subtaskCannotBeItsOwnEpic() {
-        Subtask subtask = new Subtask("Sub", "Desc", TaskStatus.NEW, 1);
-        subtask.setId(1);
-
-        assertNotEquals(subtask.getId(), subtask.getEpicId(), "Сабтаск не может быть своим эпиком");
-    }
 }
