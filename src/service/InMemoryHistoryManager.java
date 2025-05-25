@@ -25,14 +25,11 @@ public class InMemoryHistoryManager implements HistoryManager {
     public void add(Task task) {
         if (task == null) return;
 
-        // Удаляем старую запись, если есть
         remove(task.getId());
 
-        // Создаем новый узел
         Node newNode = new Node(task);
         nodeMap.put(task.getId(), newNode);
 
-        // Добавляем узел в конец списка
         if (tail == null) {
             head = tail = newNode;
         } else {
@@ -41,7 +38,6 @@ public class InMemoryHistoryManager implements HistoryManager {
             tail = newNode;
         }
     }
-
 
     @Override
     public void remove(int id) {
