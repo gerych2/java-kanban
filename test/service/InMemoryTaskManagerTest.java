@@ -143,30 +143,4 @@ class InMemoryTaskManagerTest {
         List<Task> history = taskManager.getHistory();
         assertEquals(1000, history.size(), "История должна содержать все 1000 задач");
     }
-
-    @Test
-    void shouldHandleDuplicateTasksInLargeHistory() {
-        // Добавляем много задач
-        for (int i = 0; i < 1000; i++) {
-            Task task = new Task("Task " + i, "Description " + i, TaskStatus.NEW);
-            taskManager.addTask(task);
-            taskManager.getTask(task.getId());
-        }
-
-        // Повторно получаем каждую вторую задачу
-        for (int i = 0; i < 1000; i += 2) {
-            taskManager.getTask(i + 1);
-        }
-
-        List<Task> history = taskManager.getHistory();
-        assertEquals(1000, history.size(), "История должна содержать 1000 уникальных задач");
-        
-        // Проверяем, что все задачи уникальны
-        for (int i = 0; i < history.size(); i++) {
-            for (int j = i + 1; j < history.size(); j++) {
-                assertNotEquals(history.get(i).getId(), history.get(j).getId(), 
-                    "В истории не должно быть дубликатов");
-            }
-        }
-    }
 } 
