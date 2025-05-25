@@ -16,6 +16,9 @@ public class Epic extends Task {
     }
 
     public void addSubtask(Integer subtaskId) {
+        if (subtaskId != null && subtaskId.equals(getId())) {
+            throw new IllegalArgumentException("Эпик не может содержать себя как сабтаск");
+        }
         subtaskIds.add(subtaskId);
     }
 

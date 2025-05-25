@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ae1de76-46a8-4588-b068-4d04be9aa3a4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/service/HistoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/HistoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/InMemoryHistoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/InMemoryHistoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/InMemoryTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/InMemoryTaskManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/TaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/TaskManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/service/InMemoryTaskManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/service/InMemoryTaskManagerTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="5ae1de76-46a8-4588-b068-4d04be9aa3a4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -71,6 +65,9 @@
       <recent name="D:\project_52_german\unik java\sprint4\java-kanban\src\main\tracker\manager\history" />
       <recent name="D:\project_52_german\unik java\sprint4\java-kanban\src\test\java\tracker" />
       <recent name="D:\project_52_german\unik java\sprint4\java-kanban\src\main\java\tracker" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="service" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="tracker.manager" />
