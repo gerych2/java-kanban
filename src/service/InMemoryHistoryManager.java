@@ -25,15 +25,13 @@ public class InMemoryHistoryManager implements HistoryManager {
     public void add(Task task) {
         if (task == null) return;
 
-        // Если задача уже есть в истории, перемещаем её в конец
         Node existingNode = nodeMap.get(task.getId());
         if (existingNode != null) {
             // Если узел уже в конце, ничего не делаем
             if (existingNode == tail) {
                 return;
             }
-            
-            // Удаляем узел из текущей позиции
+
             if (existingNode.prev != null) {
                 existingNode.prev.next = existingNode.next;
             } else {
@@ -42,8 +40,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             if (existingNode.next != null) {
                 existingNode.next.prev = existingNode.prev;
             }
-            
-            // Перемещаем узел в конец
+
             existingNode.prev = tail;
             existingNode.next = null;
             tail.next = existingNode;
@@ -51,11 +48,9 @@ public class InMemoryHistoryManager implements HistoryManager {
             return;
         }
 
-        // Создаем новый узел
         Node newNode = new Node(task);
         nodeMap.put(task.getId(), newNode);
 
-        // Добавляем узел в конец списка
         if (tail == null) {
             head = tail = newNode;
         } else {
@@ -70,7 +65,6 @@ public class InMemoryHistoryManager implements HistoryManager {
         Node node = nodeMap.remove(id);
         if (node == null) return;
 
-        // Обновляем связи
         if (node.prev != null) {
             node.prev.next = node.next;
         } else {
