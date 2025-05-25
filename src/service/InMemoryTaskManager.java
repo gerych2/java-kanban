@@ -51,10 +51,14 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteTask(int id) {
         tasks.remove(id);
+        historyManager.remove(id); // Удаляем задачу из истории
     }
 
     @Override
     public void removeAllTasks() {
+        for (Integer id : tasks.keySet()) {
+            historyManager.remove(id); // Удаляем все задачи из истории
+        }
         tasks.clear();
     }
 
@@ -90,14 +94,22 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteEpic(int id) {
         Epic epic = epics.remove(id);
         if (epic != null) {
+            historyManager.remove(id); // Удаляем эпик из истории
             for (Integer subtaskId : epic.getSubtaskIds()) {
                 subtasks.remove(subtaskId);
+                historyManager.remove(subtaskId); // Удаляем подзадачи из истории
             }
         }
     }
 
     @Override
     public void removeAllEpics() {
+        for (Integer id : epics.keySet()) {
+            historyManager.remove(id); // Удаляем все эпики из истории
+        }
+        for (Integer id : subtasks.keySet()) {
+            historyManager.remove(id); // Удаляем все подзадачи из истории
+        }
         epics.clear();
         subtasks.clear();
     }
@@ -141,6 +153,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteSubtask(int id) {
         Subtask subtask = subtasks.remove(id);
         if (subtask != null) {
+            historyManager.remove(id); // Удаляем подзадачу из истории
             Epic epic = epics.get(subtask.getEpicId());
             if (epic != null) {
                 epic.removeSubtask(id);
@@ -151,6 +164,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void removeAllSubtasks() {
+        for (Integer id : subtasks.keySet()) {
+            historyManager.remove(id); // Удаляем все подзадачи из истории
+        }
         subtasks.clear();
         for (Epic epic : epics.values()) {
             epic.clearSubtasks();
