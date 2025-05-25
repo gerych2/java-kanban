@@ -27,7 +27,28 @@ public class InMemoryHistoryManager implements HistoryManager {
 
         int id = task.getId();
 
-        remove(id);
+        Node existingNode = nodeMap.get(id);
+        if (existingNode != null) {
+            // Если узел уже в конце, ничего не делаем
+            if (existingNode == tail) {
+                return;
+            }
+
+            if (existingNode.prev != null) {
+                existingNode.prev.next = existingNode.next;
+            } else {
+                head = existingNode.next;
+            }
+            if (existingNode.next != null) {
+                existingNode.next.prev = existingNode.prev;
+            }
+
+            existingNode.prev = tail;
+            existingNode.next = null;
+            tail.next = existingNode;
+            tail = existingNode;
+            return;
+        }
 
         Node newNode = new Node(task);
         nodeMap.put(id, newNode);
@@ -40,7 +61,6 @@ public class InMemoryHistoryManager implements HistoryManager {
             tail = newNode;
         }
     }
-
 
     @Override
     public void remove(int id) {
