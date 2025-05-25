@@ -6,9 +6,6 @@ public class Subtask extends Task {
 
     public Subtask(String name, String description, TaskStatus taskStatus, Integer epicId) {
         super(name, description, taskStatus);
-        if (epicId != null && epicId.equals(getId())) {
-            throw new IllegalArgumentException("Сабтаск не может быть своим эпиком");
-        }
         this.epicId = epicId;
     }
 
