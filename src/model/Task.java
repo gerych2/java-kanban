@@ -3,9 +3,13 @@ package model;
 import java.util.Objects;
 
 public class Task implements Cloneable {
+
     private String name;
+
     private String description;
+
     private Integer id;
+
     private TaskStatus taskStatus;
 
     public Task(String name, String description, TaskStatus taskStatus) {
