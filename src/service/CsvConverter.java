@@ -3,6 +3,7 @@ package service;
 import model.*;
 
 public class CsvConverter {
+
     public static String taskToString(Task task) {
         return task.toCsvString();
     }
@@ -17,7 +18,12 @@ public class CsvConverter {
 
         switch (type) {
             case TASK -> {
-                Task task = new Task(name, description, status, TaskType.TASK) {};
+                Task task = new Task(name, description, status, TaskType.TASK) {
+                    @Override
+                    public String toCsvString() {
+                        return String.format("%d,%s,%s,%s,%s,", getId(), getType(), getName(), getTaskStatus(), getDescription());
+                    }
+                };
                 task.setId(id);
                 return task;
             }
@@ -37,3 +43,4 @@ public class CsvConverter {
         }
     }
 }
+
