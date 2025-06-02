@@ -2,7 +2,7 @@ package model;
 
 import java.util.Objects;
 
-public class Task implements Cloneable {
+public abstract class Task implements Cloneable {
 
     private String name;
 
@@ -12,10 +12,21 @@ public class Task implements Cloneable {
 
     private TaskStatus taskStatus;
 
-    public Task(String name, String description, TaskStatus taskStatus) {
+    private TaskType type;
+
+    public Task(String name, String description, TaskStatus taskStatus, TaskType type) {
         this.name = name;
         this.description = description;
         this.taskStatus = taskStatus;
+        this.type = type;
+    }
+
+    public TaskType getType() {
+        return type;
+    }
+
+    public void setType(TaskType type) {
+        this.type = type;
     }
 
     public Integer getId() {
@@ -58,6 +69,8 @@ public class Task implements Cloneable {
             throw new RuntimeException("Clone not supported", e);
         }
     }
+
+    public abstract String toCsvString();
 
     @Override
     public boolean equals(Object o) {

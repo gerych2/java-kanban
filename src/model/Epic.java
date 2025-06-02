@@ -8,7 +8,7 @@ public class Epic extends Task {
     private final List<Integer> subtaskIds = new ArrayList<>();
 
     public Epic(String name, String description) {
-        super(name, description, TaskStatus.NEW);
+        super(name, description, TaskStatus.NEW, TaskType.EPIC);
     }
 
     public List<Integer> getSubtaskIds() {
@@ -35,6 +35,11 @@ public class Epic extends Task {
         Epic clone = (Epic) super.clone();
         clone.subtaskIds.addAll(this.subtaskIds);
         return clone;
+    }
+
+    @Override
+    public String toCsvString() {
+        return String.format("%d,%s,%s,%s,%s,", getId(), getType(), getName(), getTaskStatus(), getDescription());
     }
 
     @Override
