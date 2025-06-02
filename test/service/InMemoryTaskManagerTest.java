@@ -6,6 +6,7 @@ import model.Epic;
 import model.Subtask;
 import model.Task;
 import model.TaskStatus;
+import model.TaskType;
 
 import java.util.List;
 
@@ -28,28 +29,41 @@ class InMemoryTaskManagerTest {
     @BeforeEach
     void setUp() {
         taskManager = new InMemoryTaskManager();
-        
-        task1 = new Task("Task 1", "Description 1", TaskStatus.NEW);
+
+        // Анонимный класс для task1
+        task1 = new Task("Task 1", "Description 1", TaskStatus.NEW, TaskType.TASK) {
+            @Override
+            public String toCsvString() {
+                return String.format("%d,%s,%s,%s,%s,", getId(), getType(), getName(), getTaskStatus(), getDescription());
+            }
+        };
         task1.setId(1);
-        
-        task2 = new Task("Task 2", "Description 2", TaskStatus.NEW);
+
+        // Анонимный класс для task2
+        task2 = new Task("Task 2", "Description 2", TaskStatus.NEW, TaskType.TASK) {
+            @Override
+            public String toCsvString() {
+                return String.format("%d,%s,%s,%s,%s,", getId(), getType(), getName(), getTaskStatus(), getDescription());
+            }
+        };
         task2.setId(2);
-        
+
         epic1 = new Epic("Epic 1", "Description Epic 1");
         epic1.setId(3);
-        
+
         subtask1 = new Subtask("Subtask 1", "Description Subtask 1", TaskStatus.NEW, epic1.getId());
         subtask1.setId(4);
-        
+
         subtask2 = new Subtask("Subtask 2", "Description Subtask 2", TaskStatus.NEW, epic1.getId());
         subtask2.setId(5);
-        
+
         taskManager.addTask(task1);
         taskManager.addTask(task2);
         taskManager.addEpic(epic1);
         taskManager.addSubtask(subtask1);
         taskManager.addSubtask(subtask2);
     }
+
 
     @Test
     void shouldRemoveTaskFromHistoryWhenDeleted() {
@@ -133,9 +147,13 @@ class InMemoryTaskManagerTest {
 
     @Test
     void shouldHandleLargeHistory() {
-        // Добавляем много задач
         for (int i = 0; i < 1000; i++) {
-            Task task = new Task("Task " + i, "Description " + i, TaskStatus.NEW);
+            Task task = new Task("Task " + i, "Description " + i, TaskStatus.NEW, TaskType.TASK) {
+                @Override
+                public String toCsvString() {
+                    return String.format("%d,%s,%s,%s,%s,", getId(), getType(), getName(), getTaskStatus(), getDescription());
+                }
+            };
             taskManager.addTask(task);
             taskManager.getTask(task.getId());
         }
@@ -143,4 +161,5 @@ class InMemoryTaskManagerTest {
         List<Task> history = taskManager.getHistory();
         assertEquals(1000, history.size(), "История должна содержать все 1000 задач");
     }
+
 } 
