@@ -47,13 +47,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             writer.write("id,type,name,status,description,epic\n");
 
             for (Task task : getTasks()) {
-                writer.write(CsvConverter.taskToString(task) + "\n");
+                writer.write(CsvConverter.toCsvString(task) + "\n");
             }
             for (Epic epic : getEpics()) {
-                writer.write(CsvConverter.taskToString(epic) + "\n");
+                writer.write(CsvConverter.toCsvString(epic) + "\n");
             }
             for (Subtask subtask : getSubtasks()) {
-                writer.write(CsvConverter.taskToString(subtask) + "\n");
+                writer.write(CsvConverter.toCsvString(subtask) + "\n");
             }
 
         } catch (IOException e) {

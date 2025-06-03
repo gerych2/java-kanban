@@ -12,7 +12,7 @@ public abstract class Task implements Cloneable {
 
     private TaskStatus taskStatus;
 
-    private TaskType type;
+    private final TaskType type;
 
     public Task(String name, String description, TaskStatus taskStatus, TaskType type) {
         this.name = name;
@@ -23,10 +23,6 @@ public abstract class Task implements Cloneable {
 
     public TaskType getType() {
         return type;
-    }
-
-    public void setType(TaskType type) {
-        this.type = type;
     }
 
     public Integer getId() {
