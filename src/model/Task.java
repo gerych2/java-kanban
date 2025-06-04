@@ -12,18 +12,13 @@ public abstract class Task implements Cloneable {
 
     private TaskStatus taskStatus;
 
-    private final TaskType type;
-
-    public Task(String name, String description, TaskStatus taskStatus, TaskType type) {
+    public Task(String name, String description, TaskStatus taskStatus) {
         this.name = name;
         this.description = description;
         this.taskStatus = taskStatus;
-        this.type = type;
     }
 
-    public TaskType getType() {
-        return type;
-    }
+    public abstract TaskType getType();
 
     public Integer getId() {
         return id;
@@ -37,16 +32,8 @@ public abstract class Task implements Cloneable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public TaskStatus getTaskStatus() {
@@ -55,15 +42,6 @@ public abstract class Task implements Cloneable {
 
     public void setTaskStatus(TaskStatus taskStatus) {
         this.taskStatus = taskStatus;
-    }
-
-    @Override
-    public Task clone() {
-        try {
-            return (Task) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException("Clone not supported", e);
-        }
     }
 
     public abstract String toCsvString();
@@ -75,7 +53,6 @@ public abstract class Task implements Cloneable {
         Task task = (Task) o;
         return Objects.equals(id, task.id);
     }
-
 
     @Override
     public int hashCode() {

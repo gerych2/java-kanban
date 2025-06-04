@@ -1,14 +1,14 @@
 package model;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Epic extends Task {
 
     private final List<Integer> subtaskIds = new ArrayList<>();
 
     public Epic(String name, String description) {
-        super(name, description, TaskStatus.NEW, TaskType.EPIC);
+        super(name, description, TaskStatus.NEW);
     }
 
     public List<Integer> getSubtaskIds() {
@@ -31,10 +31,8 @@ public class Epic extends Task {
     }
 
     @Override
-    public Epic clone() {
-        Epic clone = (Epic) super.clone();
-        clone.subtaskIds.addAll(this.subtaskIds);
-        return clone;
+    public TaskType getType() {
+        return TaskType.EPIC;
     }
 
     @Override

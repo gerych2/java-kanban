@@ -5,7 +5,7 @@ public class Subtask extends Task {
     private Integer epicId;
 
     public Subtask(String name, String description, TaskStatus taskStatus, Integer epicId) {
-        super(name, description, taskStatus, TaskType.SUBTASK);
+        super(name, description, taskStatus);
         this.epicId = epicId;
     }
 
@@ -21,10 +21,8 @@ public class Subtask extends Task {
     }
 
     @Override
-    public Subtask clone() {
-        Subtask clone = (Subtask) super.clone();
-        clone.setEpicId(this.epicId);
-        return clone;
+    public TaskType getType() {
+        return TaskType.SUBTASK;
     }
 
     @Override
