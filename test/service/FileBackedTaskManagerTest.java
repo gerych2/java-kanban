@@ -19,13 +19,8 @@ class FileBackedTaskManagerTest {
         // Создаем менеджер через фабричный метод
         FileBackedTaskManager manager = FileBackedTaskManager.loadFromFile(tempFile);
 
-        // Анонимный класс для Task
-        Task task = new Task("Task 1", "Description 1", TaskStatus.NEW, TaskType.TASK) {
-            @Override
-            public String toCsvString() {
-                return String.format("%d,%s,%s,%s,%s,", getId(), getType(), getName(), getTaskStatus(), getDescription());
-            }
-        };
+        // Создаём обычную задачу
+        SimpleTask task = new SimpleTask("Task 1", "Description 1", TaskStatus.NEW);
         task.setId(1);
         manager.addTask(task);
 

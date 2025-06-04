@@ -6,7 +6,7 @@ import model.Epic;
 import model.Subtask;
 import model.Task;
 import model.TaskStatus;
-import model.TaskType;
+import model.SimpleTask;
 
 import java.util.List;
 
@@ -30,20 +30,10 @@ class InMemoryHistoryManagerTest {
     void setUp() {
         historyManager = new InMemoryHistoryManager();
 
-        task1 = new Task("Task 1", "Description 1", TaskStatus.NEW, TaskType.TASK) {
-            @Override
-            public String toCsvString() {
-                return String.format("%d,%s,%s,%s,%s,", getId(), getType(), getName(), getTaskStatus(), getDescription());
-            }
-        };
+        task1 = new SimpleTask("Task 1", "Description 1", TaskStatus.NEW);
         task1.setId(1);
 
-        task2 = new Task("Task 2", "Description 2", TaskStatus.NEW, TaskType.TASK) {
-            @Override
-            public String toCsvString() {
-                return String.format("%d,%s,%s,%s,%s,", getId(), getType(), getName(), getTaskStatus(), getDescription());
-            }
-        };
+        task2 = new SimpleTask("Task 2", "Description 2", TaskStatus.NEW);
         task2.setId(2);
 
         epic1 = new Epic("Epic 1", "Description Epic 1");
@@ -59,9 +49,8 @@ class InMemoryHistoryManagerTest {
     @Test
     void add_addsTaskToEndOfHistory() {
         historyManager.add(task1);
-
         List<Task> history = historyManager.getHistory();
-        assertNotNull(history, "История должна быть не пуста");
+        assertNotNull(history);
         assertEquals(1, history.size());
         assertEquals(task1, history.get(0));
     }
@@ -70,22 +59,19 @@ class InMemoryHistoryManagerTest {
     void add_replacesDuplicateTaskInHistory() {
         historyManager.add(task1);
         historyManager.add(task2);
-        historyManager.add(task1); // task1 добавляется снова
-
+        historyManager.add(task1);
         List<Task> history = historyManager.getHistory();
         assertEquals(2, history.size());
-        assertEquals(task2, history.get(0), "Первой должна быть task2");
-        assertEquals(task1, history.get(1), "Второй должна быть task1");
+        assertEquals(task2, history.get(0));
+        assertEquals(task1, history.get(1));
     }
 
     @Test
     void remove_removesTaskById() {
         historyManager.add(task1);
         historyManager.add(task2);
-
-        historyManager.remove(1); // удаляем task1
+        historyManager.remove(task1.getId());
         List<Task> history = historyManager.getHistory();
-
         assertEquals(1, history.size());
         assertEquals(task2, history.get(0));
     }
@@ -93,24 +79,20 @@ class InMemoryHistoryManagerTest {
     @Test
     void getHistory_returnsEmptyListWhenNoTasks() {
         List<Task> history = historyManager.getHistory();
-        assertTrue(history.isEmpty(), "История должна быть пустой");
+        assertTrue(history.isEmpty());
     }
 
     @Test
     void shouldMaintainOrderWhenAddingMultipleTasks() {
         historyManager.add(task1);
         historyManager.add(task2);
-        historyManager.add(task1); // Добавляем task1 снова
-
+        historyManager.add(task1);
         List<Task> history = historyManager.getHistory();
         assertEquals(2, history.size());
         assertEquals(task2, history.get(0));
         assertEquals(task1, history.get(1));
-
-        // Добавляем task1 снова и проверяем, что он переместился в конец
         historyManager.add(task1);
         history = historyManager.getHistory();
-        assertEquals(2, history.size());
         assertEquals(task2, history.get(0));
         assertEquals(task1, history.get(1));
     }
@@ -119,9 +101,7 @@ class InMemoryHistoryManagerTest {
     void shouldRemoveTaskFromHistoryWhenDeleted() {
         historyManager.add(task1);
         historyManager.add(task2);
-        
         historyManager.remove(task1.getId());
-        
         List<Task> history = historyManager.getHistory();
         assertEquals(1, history.size());
         assertEquals(task2, history.get(0));
@@ -131,9 +111,7 @@ class InMemoryHistoryManagerTest {
     void shouldRemoveSubtaskFromHistoryWhenDeleted() {
         historyManager.add(subtask1);
         historyManager.add(subtask2);
-        
         historyManager.remove(subtask1.getId());
-        
         List<Task> history = historyManager.getHistory();
         assertEquals(1, history.size());
         assertEquals(subtask2, history.get(0));
@@ -143,9 +121,7 @@ class InMemoryHistoryManagerTest {
     void shouldRemoveEpicFromHistoryWhenDeleted() {
         historyManager.add(epic1);
         historyManager.add(subtask1);
-        
         historyManager.remove(epic1.getId());
-        
         List<Task> history = historyManager.getHistory();
         assertEquals(1, history.size());
         assertEquals(subtask1, history.get(0));
@@ -153,60 +129,36 @@ class InMemoryHistoryManagerTest {
 
     @Test
     void shouldHandleLargeHistory() {
-        // Добавляем много задач с анонимным классом
         for (int i = 0; i < 1000; i++) {
-            Task task = new Task("Task " + i, "Description " + i, TaskStatus.NEW, TaskType.TASK) {
-                @Override
-                public String toCsvString() {
-                    return String.format("%d,%s,%s,%s,%s,", getId(), getType(), getName(), getTaskStatus(), getDescription());
-                }
-            };
+            Task task = new SimpleTask("Task " + i, "Description " + i, TaskStatus.NEW);
             task.setId(i);
             historyManager.add(task);
         }
-
         List<Task> history = historyManager.getHistory();
-        assertEquals(1000, history.size(), "История должна содержать все 1000 задач");
-
-        // Проверяем порядок
+        assertEquals(1000, history.size());
         for (int i = 0; i < 1000; i++) {
-            assertEquals(i, history.get(i).getId(), "Порядок задач должен сохраняться");
+            assertEquals(i, history.get(i).getId());
         }
     }
-
 
     @Test
     void shouldHandleDuplicateTasksInLargeHistory() {
         for (int i = 0; i < 1000; i++) {
-            Task task = new Task("Task " + i, "Description " + i, TaskStatus.NEW, TaskType.TASK) {
-                @Override
-                public String toCsvString() {
-                    return String.format("%d,%s,%s,%s,%s,", getId(), getType(), getName(), getTaskStatus(), getDescription());
-                }
-            };
+            Task task = new SimpleTask("Task " + i, "Description " + i, TaskStatus.NEW);
             task.setId(i);
             historyManager.add(task);
         }
-
         for (int i = 0; i < 1000; i += 2) {
-            Task task = new Task("Task " + i, "Description " + i, TaskStatus.NEW, TaskType.TASK) {
-                @Override
-                public String toCsvString() {
-                    return String.format("%d,%s,%s,%s,%s,", getId(), getType(), getName(), getTaskStatus(), getDescription());
-                }
-            };
+            Task task = new SimpleTask("Task " + i, "Description " + i, TaskStatus.NEW);
             task.setId(i);
             historyManager.add(task);
         }
-
         List<Task> history = historyManager.getHistory();
-        assertEquals(1000, history.size(), "История должна содержать 1000 уникальных задач");
-
+        assertEquals(1000, history.size());
         for (int i = 0; i < history.size(); i++) {
             for (int j = i + 1; j < history.size(); j++) {
-                assertNotEquals(history.get(i).getId(), history.get(j).getId(),
-                        "В истории не должно быть дубликатов");
+                assertNotEquals(history.get(i).getId(), history.get(j).getId());
             }
         }
     }
-} 
+}
