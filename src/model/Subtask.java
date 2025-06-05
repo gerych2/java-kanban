@@ -26,11 +26,6 @@ public class Subtask extends Task {
     }
 
     @Override
-    public String toCsvString() {
-        return String.format("%d,%s,%s,%s,%s,%d", getId(), getType(), getName(), getTaskStatus(), getDescription(), epicId);
-    }
-
-    @Override
     public String toString() {
         return "Subtask{" +
                 "name='" + getName() + '\'' +

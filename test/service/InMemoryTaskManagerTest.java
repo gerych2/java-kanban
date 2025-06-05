@@ -6,7 +6,7 @@ import model.Epic;
 import model.Subtask;
 import model.Task;
 import model.TaskStatus;
-import model.SimpleTask;
+import model.TaskType;
 
 import java.util.List;
 
@@ -17,19 +17,33 @@ class InMemoryTaskManagerTest {
     private TaskManager taskManager;
 
     private Task task1;
+
     private Task task2;
+
     private Epic epic1;
+
     private Subtask subtask1;
+
     private Subtask subtask2;
 
     @BeforeEach
     void setUp() {
         taskManager = new InMemoryTaskManager();
 
-        task1 = new SimpleTask("Task 1", "Description 1", TaskStatus.NEW);
+        task1 = new Task("Task 1", "Description 1", TaskStatus.NEW) {
+            @Override
+            public TaskType getType() {
+                return TaskType.TASK;
+            }
+        };
         task1.setId(1);
 
-        task2 = new SimpleTask("Task 2", "Description 2", TaskStatus.NEW);
+        task2 = new Task("Task 2", "Description 2", TaskStatus.NEW) {
+            @Override
+            public TaskType getType() {
+                return TaskType.TASK;
+            }
+        };
         task2.setId(2);
 
         epic1 = new Epic("Epic 1", "Description Epic 1");
@@ -128,7 +142,12 @@ class InMemoryTaskManagerTest {
     @Test
     void shouldHandleLargeHistory() {
         for (int i = 0; i < 1000; i++) {
-            Task task = new SimpleTask("Task " + i, "Description " + i, TaskStatus.NEW);
+            Task task = new Task("Task " + i, "Description " + i, TaskStatus.NEW) {
+                @Override
+                public TaskType getType() {
+                    return TaskType.TASK;
+                }
+            };
             task.setId(i);
             taskManager.addTask(task);
             taskManager.getTask(task.getId());

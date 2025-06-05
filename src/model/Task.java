@@ -2,7 +2,7 @@ package model;
 
 import java.util.Objects;
 
-public abstract class Task implements Cloneable {
+public class Task implements Cloneable {
 
     private String name;
 
@@ -18,7 +18,9 @@ public abstract class Task implements Cloneable {
         this.taskStatus = taskStatus;
     }
 
-    public abstract TaskType getType();
+    public TaskType getType() {
+        return TaskType.TASK;
+    }
 
     public Integer getId() {
         return id;
@@ -32,8 +34,16 @@ public abstract class Task implements Cloneable {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public TaskStatus getTaskStatus() {
@@ -44,7 +54,14 @@ public abstract class Task implements Cloneable {
         this.taskStatus = taskStatus;
     }
 
-    public abstract String toCsvString();
+    @Override
+    public Task clone() {
+        try {
+            return (Task) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("Clone not supported", e);
+        }
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -15,7 +15,12 @@ public class CsvConverter {
 
         return switch (type) {
             case TASK -> {
-                SimpleTask task = new SimpleTask(name, description, status);
+                Task task = new Task(name, description, status) {
+                    @Override
+                    public TaskType getType() {
+                        return TaskType.TASK;
+                    }
+                };
                 task.setId(id);
                 yield task;
             }
@@ -35,6 +40,18 @@ public class CsvConverter {
     }
 
     public static String toCsvString(Task task) {
-        return task.toCsvString();
+        return String.format("%d,%s,%s,%s,%s,",
+                task.getId(), task.getType(), task.getName(), task.getTaskStatus(), task.getDescription());
+    }
+
+    public static String toCsvString(Epic epic) {
+        return String.format("%d,%s,%s,%s,%s,",
+                epic.getId(), epic.getType(), epic.getName(), epic.getTaskStatus(), epic.getDescription());
+    }
+
+    public static String toCsvString(Subtask subtask) {
+        return String.format("%d,%s,%s,%s,%s,%d",
+                subtask.getId(), subtask.getType(), subtask.getName(), subtask.getTaskStatus(),
+                subtask.getDescription(), subtask.getEpicId());
     }
 }
