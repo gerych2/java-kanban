@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Epic extends Task {
+
     private final List<Integer> subtaskIds = new ArrayList<>();
 
     public Epic(String name, String description) {
@@ -15,6 +16,9 @@ public class Epic extends Task {
     }
 
     public void addSubtask(Integer subtaskId) {
+        if (subtaskId != null && subtaskId.equals(getId())) {
+            throw new IllegalArgumentException("Эпик не может содержать себя как сабтаск");
+        }
         subtaskIds.add(subtaskId);
     }
 

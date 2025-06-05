@@ -20,9 +20,10 @@ class SubtaskTest {
 
     @Test
     void subtaskCannotBeItsOwnEpic() {
-        Subtask subtask = new Subtask("Sub", "Desc", TaskStatus.NEW, 1);
+        Subtask subtask = new Subtask("Sub", "Desc", TaskStatus.NEW, 999); // временный эпикId
         subtask.setId(1);
 
-        assertNotEquals(subtask.getId(), subtask.getEpicId(), "Сабтаск не может быть своим эпиком");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> subtask.setEpicId(1));
+        assertEquals("Сабтаск не может быть своим эпиком", exception.getMessage());
     }
 }
