@@ -21,10 +21,8 @@ public class Subtask extends Task {
     }
 
     @Override
-    public Subtask clone() {
-        Subtask clone = (Subtask) super.clone();
-        clone.setEpicId(this.epicId);
-        return clone;
+    public TaskType getType() {
+        return TaskType.SUBTASK;
     }
 
     @Override

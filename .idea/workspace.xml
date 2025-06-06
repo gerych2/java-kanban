@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ae1de76-46a8-4588-b068-4d04be9aa3a4" name="Changes" comment="" />
+    <list default="true" id="5ae1de76-46a8-4588-b068-4d04be9aa3a4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Epic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Epic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/SimpleTask.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Subtask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Subtask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/CsvConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/CsvConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/service/InMemoryHistoryManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/service/InMemoryHistoryManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/service/InMemoryTaskManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/service/InMemoryTaskManagerTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,8 +23,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -44,7 +54,7 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;sprint__6-solution&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;sprint__7-solution-in-file-manager&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/project_52_german/unik java/sprint4/java-kanban&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -102,6 +112,10 @@
       <workItem from="1746093366405" duration="14000" />
       <workItem from="1746093540110" duration="5106000" />
       <workItem from="1746355262716" duration="904000" />
+      <workItem from="1748698242957" duration="1324000" />
+      <workItem from="1748856035735" duration="1980000" />
+      <workItem from="1748978557490" duration="3684000" />
+      <workItem from="1749154509646" duration="345000" />
     </task>
     <servers />
   </component>

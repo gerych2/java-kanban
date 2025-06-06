@@ -31,10 +31,8 @@ public class Epic extends Task {
     }
 
     @Override
-    public Epic clone() {
-        Epic clone = (Epic) super.clone();
-        clone.subtaskIds.addAll(this.subtaskIds);
-        return clone;
+    public TaskType getType() {
+        return TaskType.EPIC;
     }
 
     @Override
