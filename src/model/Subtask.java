@@ -1,6 +1,7 @@
 package model;
 
 public class Subtask extends Task {
+
     private Integer epicId;
 
     public Subtask(String name, String description, TaskStatus taskStatus, Integer epicId) {
@@ -13,14 +14,15 @@ public class Subtask extends Task {
     }
 
     public void setEpicId(Integer epicId) {
+        if (epicId != null && epicId.equals(getId())) {
+            throw new IllegalArgumentException("Сабтаск не может быть своим эпиком");
+        }
         this.epicId = epicId;
     }
 
     @Override
-    public Subtask clone() {
-        Subtask clone = (Subtask) super.clone();
-        clone.setEpicId(this.epicId);
-        return clone;
+    public TaskType getType() {
+        return TaskType.SUBTASK;
     }
 
     @Override
