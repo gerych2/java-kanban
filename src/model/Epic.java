@@ -6,70 +6,62 @@ import java.util.List;
 import java.util.Objects;
 
 public class Epic extends Task {
+    private LocalDateTime endTime;
 
     public Epic(String name, String description) {
         super(name, description, TaskStatus.NEW);
-        this.type = TaskType.EPIC;
+    }
+
+    @Override
+    public TaskType getType() {
+        return TaskType.EPIC;
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
     public void updateTimeFields(List<Subtask> subtasks) {
         if (subtasks == null || subtasks.isEmpty()) {
-            super.setDuration(Duration.ZERO);
-            super.setStartTime(null);
+            this.startTime = null;
+            this.endTime = null;
+            this.duration = Duration.ZERO;
             return;
         }
 
+        LocalDateTime earliest = null;
+        LocalDateTime latest = null;
         Duration totalDuration = Duration.ZERO;
-        LocalDateTime earliestStart = null;
-        LocalDateTime latestEnd = null;
 
-        for (Subtask subtask : subtasks) {
-            if (subtask.getStartTime() != null && subtask.getDuration() != null) {
-                LocalDateTime subStart = subtask.getStartTime();
-                LocalDateTime subEnd = subtask.getEndTime();
-
-                if (earliestStart == null || subStart.isBefore(earliestStart)) {
-                    earliestStart = subStart;
+        for (Subtask sub : subtasks) {
+            if (sub.getStartTime() != null && sub.getEndTime() != null) {
+                if (earliest == null || sub.getStartTime().isBefore(earliest)) {
+                    earliest = sub.getStartTime();
                 }
-                if (latestEnd == null || (subEnd != null && subEnd.isAfter(latestEnd))) {
-                    latestEnd = subEnd;
+                if (latest == null || sub.getEndTime().isAfter(latest)) {
+                    latest = sub.getEndTime();
                 }
-
-                totalDuration = totalDuration.plus(subtask.getDuration());
+                totalDuration = totalDuration.plus(sub.getDuration());
             }
         }
 
-        super.setDuration(totalDuration);
-        super.setStartTime(earliestStart);
-    }
-
-    @Override
-    public String toString() {
-        return "Epic{" +
-                "name='" + super.getName() + '\'' +
-                ", description='" + super.getDescription() + '\'' +
-                ", id=" + super.getId() +
-                ", status=" + super.getStatus() +
-                ", type=" + super.getType() +
-                ", duration=" + super.getDuration() +
-                ", startTime=" + super.getStartTime() +
-                ", endTime=" + super.getEndTime() +
-                '}';
+        this.startTime = earliest;
+        this.endTime = latest;
+        this.duration = totalDuration;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Epic)) return false;
         if (!super.equals(o)) return false;
         Epic epic = (Epic) o;
-        return Objects.equals(super.getDuration(), epic.getDuration())
-                && Objects.equals(super.getStartTime(), epic.getStartTime())
-                && Objects.equals(super.getEndTime(), epic.getEndTime());
+        return Objects.equals(startTime, epic.startTime)
+                && Objects.equals(endTime, epic.endTime)
+                && Objects.equals(duration, epic.duration);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), super.getDuration(), super.getStartTime(), super.getEndTime());
+        return Objects.hash(super.hashCode(), startTime, endTime, duration);
     }
 }
