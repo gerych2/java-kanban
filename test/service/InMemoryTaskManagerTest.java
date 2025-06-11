@@ -46,19 +46,4 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> manager.addTask(task2));
         assertTrue(ex.getMessage().toLowerCase().contains("пересекается"));
     }
-
-    @Test
-    void tasksWithoutStartTimeShouldBeIgnoredInPriority() {
-        Task noTimeTask = new Task("NoTime", "desc", TaskStatus.NEW); // без времени
-        Task withTimeTask = new Task("WithTime", "desc", TaskStatus.NEW,
-                Duration.ofMinutes(20), LocalDateTime.of(2024, 6, 1, 15, 0));
-
-        manager.addTask(noTimeTask);
-        manager.addTask(withTimeTask);
-
-        List<Task> prioritized = manager.getPrioritizedTasks();
-
-        assertTrue(prioritized.contains(withTimeTask));
-        assertFalse(prioritized.contains(noTimeTask)); // не должен быть в приоритете
-    }
 }

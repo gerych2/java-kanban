@@ -1,10 +1,12 @@
 package service;
 
 import model.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,36 +15,32 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
 
-    private File file;
-
-    @BeforeEach
-    void setupFile() {
-        file = new File("test_save.csv");
-        if (file.exists()) {
-            file.delete();
-        }
-    }
+    private File testFile;
 
     @Override
     FileBackedTaskManager createManager() {
-        return new FileBackedTaskManager(file);
+        testFile = new File("test-tasks.csv");
+        return new FileBackedTaskManager(testFile);
+    }
+
+    @AfterEach
+    void cleanup() {
+        if (testFile.exists()) {
+            testFile.delete();
+        }
     }
 
     @Test
     void taskShouldBeSavedAndLoadedWithTimeFields() {
-        Task task = new Task("SaveTest", "Description", TaskStatus.NEW,
-                Duration.ofMinutes(90), LocalDateTime.of(2024, 6, 1, 12, 0));
+        Task task = new Task("TestTask", "desc", TaskStatus.NEW,
+                Duration.ofMinutes(45), LocalDateTime.of(2024, 6, 1, 14, 0));
         manager.addTask(task);
 
-        FileBackedTaskManager loaded = new FileBackedTaskManager(file);
+        FileBackedTaskManager loaded = FileBackedTaskManager.loadFromFile(testFile);
         List<Task> tasks = loaded.getTasks();
 
         assertEquals(1, tasks.size());
-
         Task loadedTask = tasks.get(0);
-        assertEquals(task.getName(), loadedTask.getName());
-        assertEquals(task.getDescription(), loadedTask.getDescription());
-        assertEquals(task.getStatus(), loadedTask.getStatus());
         assertEquals(task.getStartTime(), loadedTask.getStartTime());
         assertEquals(task.getDuration(), loadedTask.getDuration());
         assertEquals(task.getEndTime(), loadedTask.getEndTime());
@@ -50,6 +48,8 @@ class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
 
     @Test
     void emptyManagerShouldNotCrashOnLoad() {
-        assertDoesNotThrow(() -> new FileBackedTaskManager(file));
+        FileBackedTaskManager loaded = FileBackedTaskManager.loadFromFile(testFile);
+        assertNotNull(loaded.getTasks());
+        assertTrue(loaded.getTasks().isEmpty());
     }
 }

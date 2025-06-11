@@ -14,6 +14,10 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         loadFromFile();
     }
 
+    public static FileBackedTaskManager loadFromFile(File file) {
+        return new FileBackedTaskManager(file);
+    }
+
     private void loadFromFile() {
         try {
             if (!file.exists()) {
