@@ -1,5 +1,7 @@
 package model;
 
+import java.time.format.DateTimeFormatter;
+
 public class Subtask extends Task {
 
     private Integer epicId;
@@ -27,12 +29,16 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return "Subtask{" +
                 "name='" + getName() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", id=" + getId() +
                 ", taskStatus=" + getTaskStatus() +
                 ", epicId=" + epicId +
+                ", duration=" + (getDuration() != null ? getDuration().toMinutes() + "m" : "null") +
+                ", startTime=" + (getStartTime() != null ? getStartTime().format(formatter) : "null") +
+                ", endTime=" + (getEndTime() != null ? getEndTime().format(formatter) : "null") +
                 '}';
     }
 }

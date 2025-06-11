@@ -1,6 +1,8 @@
 package model;
 
 import java.util.Objects;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class Task implements Cloneable {
 
@@ -11,6 +13,10 @@ public class Task implements Cloneable {
     private Integer id;
 
     private TaskStatus taskStatus;
+
+    private Duration duration;
+
+    private LocalDateTime startTime;
 
     public Task(String name, String description, TaskStatus taskStatus) {
         this.name = name;
@@ -54,6 +60,26 @@ public class Task implements Cloneable {
         this.taskStatus = taskStatus;
     }
 
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return (startTime != null && duration != null) ? startTime.plus(duration) : null;
+    }
+
     @Override
     public Task clone() {
         try {
@@ -83,6 +109,9 @@ public class Task implements Cloneable {
                 ", description='" + description + '\'' +
                 ", id=" + id +
                 ", taskStatus=" + taskStatus +
+                ", duration=" + (duration != null ? duration.toMinutes() + "m" : "null") +
+                ", startTime=" + (startTime != null ? startTime : "null") +
+                ", endTime=" + (getEndTime() != null ? getEndTime() : "null") +
                 '}';
     }
 }

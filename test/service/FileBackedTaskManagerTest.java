@@ -1,16 +1,55 @@
 package service;
 
 import model.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FileBackedTaskManagerTest {
+class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
+    @TempDir
+    Path tempDir;
+
+    @BeforeEach
+    @Override
+    void setUp() {
+        File file = tempDir.resolve("tasks.csv").toFile();
+        taskManager = FileBackedTaskManager.loadFromFile(file);
+        super.setUp();
+    }
+
+    @Test
+    void shouldSaveAndLoadTasks() {
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        taskManager.addEpic(epic1);
+        taskManager.addSubtask(subtask1);
+        taskManager.addSubtask(subtask2);
+
+        FileBackedTaskManager loadedManager = FileBackedTaskManager.loadFromFile(
+                ((FileBackedTaskManager) taskManager).getFile());
+
+        assertEquals(taskManager.getTasks(), loadedManager.getTasks(), "Задачи должны совпадать");
+        assertEquals(taskManager.getEpics(), loadedManager.getEpics(), "Эпики должны совпадать");
+        assertEquals(taskManager.getSubtasks(), loadedManager.getSubtasks(), "Подзадачи должны совпадать");
+    }
+
+    @Test
+    void shouldHandleEmptyFile() {
+        FileBackedTaskManager loadedManager = FileBackedTaskManager.loadFromFile(
+                ((FileBackedTaskManager) taskManager).getFile());
+
+        assertTrue(loadedManager.getTasks().isEmpty(), "Список задач должен быть пустым");
+        assertTrue(loadedManager.getEpics().isEmpty(), "Список эпиков должен быть пустым");
+        assertTrue(loadedManager.getSubtasks().isEmpty(), "Список подзадач должен быть пустым");
+    }
 
     @Test
     void shouldSaveAndLoadTasksCorrectly() throws IOException {
