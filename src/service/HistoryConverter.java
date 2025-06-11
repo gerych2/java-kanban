@@ -1,8 +1,5 @@
 package service;
 
-import model.Task;
-import service.HistoryManager;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
