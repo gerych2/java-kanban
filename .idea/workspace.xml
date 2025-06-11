@@ -6,12 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="5ae1de76-46a8-4588-b068-4d04be9aa3a4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Epic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Epic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/SimpleTask.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Subtask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Subtask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Task.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/CsvConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/CsvConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/service/InMemoryHistoryManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/service/InMemoryHistoryManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/FileBackedTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/FileBackedTaskManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/InMemoryTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/InMemoryTaskManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/Managers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Managers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/TaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/TaskManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/model/EpicTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/EpicTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/model/SubtaskTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/SubtaskTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/model/TaskTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/TaskTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/service/FileBackedTaskManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/service/FileBackedTaskManagerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/service/InMemoryTaskManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/service/InMemoryTaskManagerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +61,7 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;sprint__7-solution-in-file-manager&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;sprint__8-solution-time-and-duration&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/project_52_german/unik java/sprint4/java-kanban&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -116,6 +123,7 @@
       <workItem from="1748856035735" duration="1980000" />
       <workItem from="1748978557490" duration="3684000" />
       <workItem from="1749154509646" duration="345000" />
+      <workItem from="1749645088917" duration="6280000" />
     </task>
     <servers />
   </component>

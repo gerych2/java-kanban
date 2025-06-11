@@ -3,6 +3,8 @@ package app;
 import model.*;
 import service.*;
 
+import java.io.File;
+
 public class Main {
     public static void main(String[] args) {
         Task task1 = new Task("Переезд", "Упаковать вещи", TaskStatus.NEW) {
@@ -22,7 +24,7 @@ public class Main {
         task2.setId(2);
 
         // Используем CsvConverter
-        System.out.println(CsvConverter.toCsvString(task1));
-        System.out.println(CsvConverter.toCsvString(task2));
+        System.out.println(CsvConverter.toString(task1));
+        System.out.println(CsvConverter.toString(task2));
     }
 }

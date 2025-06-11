@@ -1,57 +1,52 @@
 package service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import model.*;
 
 public class CsvConverter {
 
-    public static Task taskFromString(String value) {
-        String[] fields = value.split(",");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
+    public static String toString(Task task) {
+        String[] fields = {
+                String.valueOf(task.getId()),
+                task.getType().toString(),
+                task.getName(),
+                task.getStatus().toString(),
+                task.getDescription(),
+                task instanceof Subtask ? String.valueOf(((Subtask) task).getEpicId()) : "",
+                task.getDuration() != null ? String.valueOf(task.getDuration().toMinutes()) : "",
+                task.getStartTime() != null ? task.getStartTime().format(formatter) : ""
+        };
+        return String.join(",", fields);
+    }
+
+    public static Task fromString(String value) {
+        String[] fields = value.split(",", -1);
         int id = Integer.parseInt(fields[0]);
         TaskType type = TaskType.valueOf(fields[1]);
         String name = fields[2];
         TaskStatus status = TaskStatus.valueOf(fields[3]);
         String description = fields[4];
 
-        return switch (type) {
-            case TASK -> {
-                Task task = new Task(name, description, status) {
-                    @Override
-                    public TaskType getType() {
-                        return TaskType.TASK;
-                    }
-                };
-                task.setId(id);
-                yield task;
-            }
-            case EPIC -> {
-                Epic epic = new Epic(name, description);
-                epic.setId(id);
-                epic.setTaskStatus(status);
-                yield epic;
-            }
+        Duration duration = fields[6].isEmpty() ? null : Duration.ofMinutes(Long.parseLong(fields[6]));
+        LocalDateTime startTime = fields[7].isEmpty() ? null : LocalDateTime.parse(fields[7], formatter);
+
+        Task task;
+        switch (type) {
+            case TASK -> task = new Task(name, description, status, duration, startTime);
             case SUBTASK -> {
                 int epicId = Integer.parseInt(fields[5]);
-                Subtask subtask = new Subtask(name, description, status, epicId);
-                subtask.setId(id);
-                yield subtask;
+                task = new Subtask(name, description, status, duration, startTime, epicId);
             }
-        };
-    }
+            case EPIC -> task = new Epic(name, description); // duration/startTime will be updated later
+            default -> throw new IllegalArgumentException("Unknown task type");
+        }
 
-    public static String toCsvString(Task task) {
-        return String.format("%d,%s,%s,%s,%s,",
-                task.getId(), task.getType(), task.getName(), task.getTaskStatus(), task.getDescription());
-    }
-
-    public static String toCsvString(Epic epic) {
-        return String.format("%d,%s,%s,%s,%s,",
-                epic.getId(), epic.getType(), epic.getName(), epic.getTaskStatus(), epic.getDescription());
-    }
-
-    public static String toCsvString(Subtask subtask) {
-        return String.format("%d,%s,%s,%s,%s,%d",
-                subtask.getId(), subtask.getType(), subtask.getName(), subtask.getTaskStatus(),
-                subtask.getDescription(), subtask.getEpicId());
+        task.setId(id);
+        task.setStatus(status);
+        return task;
     }
 }

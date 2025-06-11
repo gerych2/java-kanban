@@ -1,57 +1,62 @@
 package service;
 
 import model.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FileBackedTaskManagerTest {
+class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
+
+    private File file;
+
+    private FileBackedTaskManager manager;
+
+    @BeforeEach
+    void setUpConcrete() {
+        file = new File("test_tasks.csv");
+        manager = new FileBackedTaskManager(file);
+    }
+
+    @AfterEach
+    void tearDown() {
+        if (file.exists()) {
+            file.delete();
+        }
+    }
+
+    @Override
+    FileBackedTaskManager createManager() {
+        return new FileBackedTaskManager(new File("test_tasks.csv"));
+    }
 
     @Test
-    void shouldSaveAndLoadTasksCorrectly() throws IOException {
-        File tempFile = File.createTempFile("tasks", ".csv");
-
-        // Создаем менеджер через фабричный метод
-        FileBackedTaskManager manager = FileBackedTaskManager.loadFromFile(tempFile);
-
-        // Создаём обычную задачу через анонимный класс
-        Task task = new Task("Task 1", "Description 1", TaskStatus.NEW) {
-            @Override
-            public TaskType getType() {
-                return TaskType.TASK;
-            }
-        };
-        task.setId(1);
+    void taskShouldBeSavedAndLoadedWithTimeFields() {
+        Task task = new Task("Timed task", "desc", TaskStatus.NEW,
+                Duration.ofMinutes(45), LocalDateTime.of(2024, 6, 2, 9, 0));
         manager.addTask(task);
 
-        Epic epic = new Epic("Epic 1", "Epic Description");
-        epic.setId(2);
-        manager.addEpic(epic);
+        FileBackedTaskManager loaded = new FileBackedTaskManager(file);
+        List<Task> tasks = loaded.getPrioritizedTasks();
 
-        Subtask subtask = new Subtask("Subtask 1", "Subtask Description", TaskStatus.NEW, epic.getId());
-        subtask.setId(3);
-        manager.addSubtask(subtask);
+        assertEquals(1, tasks.size());
+        Task loadedTask = tasks.get(0);
 
-        // Загружаем менеджер из файла
-        FileBackedTaskManager loadedManager = FileBackedTaskManager.loadFromFile(tempFile);
+        assertEquals(task.getName(), loadedTask.getName());
+        assertEquals(task.getDescription(), loadedTask.getDescription());
+        assertEquals(task.getStartTime(), loadedTask.getStartTime());
+        assertEquals(task.getDuration(), loadedTask.getDuration());
+        assertEquals(task.getEndTime(), loadedTask.getEndTime());
+    }
 
-        List<Task> tasks = loadedManager.getTasks();
-        List<Epic> epics = loadedManager.getEpics();
-        List<Subtask> subtasks = loadedManager.getSubtasks();
-
-        assertEquals(1, tasks.size(), "Должна быть 1 задача");
-        assertEquals(1, epics.size(), "Должен быть 1 эпик");
-        assertEquals(1, subtasks.size(), "Должна быть 1 подзадача");
-
-        assertEquals(task.getId(), tasks.get(0).getId());
-        assertEquals(epic.getId(), epics.get(0).getId());
-        assertEquals(subtask.getId(), subtasks.get(0).getId());
-
-        Files.deleteIfExists(tempFile.toPath());
+    @Test
+    void emptyManagerShouldNotCrashOnLoad() {
+        assertDoesNotThrow(() -> new FileBackedTaskManager(file));
     }
 }
