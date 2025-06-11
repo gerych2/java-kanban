@@ -3,8 +3,6 @@ package app;
 import model.*;
 import service.*;
 
-import java.io.File;
-
 public class Main {
     public static void main(String[] args) {
         Task task1 = new Task("Переезд", "Упаковать вещи", TaskStatus.NEW) {
