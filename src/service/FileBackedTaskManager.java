@@ -40,18 +40,14 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
                     switch (task.getType()) {
                         case TASK -> tasks.put(id, task);
-                        case EPIC -> epics.put(id, (Epic) task);
+                        case EPIC -> {
+                            epics.put(id, (Epic) task);
+                            epicSubtasks.put(id, new ArrayList<>());
+                        }
                         case SUBTASK -> {
                             subtasks.put(id, (Subtask) task);
                             int epicId = ((Subtask) task).getEpicId();
-                            Epic epic = epics.get(epicId);
-                            if (epic != null) {
-                                epicSubtasks.get(epicId).add((Subtask) task);
-                            } else {
-                                List<Subtask> list = new ArrayList<>();
-                                list.add((Subtask) task);
-                                epicSubtasks.put(epicId, list);
-                            }
+                            epicSubtasks.computeIfAbsent(epicId, k -> new ArrayList<>()).add((Subtask) task);
                         }
                     }
 
@@ -69,14 +65,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                             historyManager.add(task);
                         }
                     }
-
-
                 }
             }
 
-            // после загрузки всех задач — обновляем время у эпиков
             for (Epic epic : epics.values()) {
-                epic.updateTimeFields(epicSubtasks.get(epic.getId()));
+                updateEpicFields(epic.getId());
             }
 
         } catch (IOException e) {
@@ -99,7 +92,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 writer.newLine();
             }
 
-            writer.newLine(); // пустая строка
+            writer.newLine();
             writer.write(CsvConverter.historyToString(historyManager));
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка при сохранении в файл: " + file.getName(), e);
