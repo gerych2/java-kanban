@@ -6,11 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5ae1de76-46a8-4588-b068-4d04be9aa3a4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Epic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Epic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/CsvConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/CsvConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/FileBackedTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/FileBackedTaskManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/HistoryConverter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/InMemoryTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/InMemoryTaskManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +109,7 @@
       <workItem from="1748856035735" duration="1980000" />
       <workItem from="1748978557490" duration="3684000" />
       <workItem from="1749154509646" duration="345000" />
-      <workItem from="1749645088917" duration="9930000" />
+      <workItem from="1749645088917" duration="10569000" />
     </task>
     <servers />
   </component>
