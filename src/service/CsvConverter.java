@@ -5,11 +5,15 @@ import model.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CsvConverter {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm");
 
+    // Сериализация задачи в строку
     public static String toString(Task task) {
         StringBuilder sb = new StringBuilder();
         sb.append(task.getId()).append(",");
@@ -21,7 +25,7 @@ public class CsvConverter {
         if (task instanceof Subtask subtask) {
             sb.append(subtask.getEpicId()).append(",");
         } else {
-            sb.append(","); // для совместимости с Subtask
+            sb.append(",");
         }
 
         sb.append(task.getStartTime() != null ? task.getStartTime().format(FORMATTER) : "").append(",");
@@ -30,6 +34,7 @@ public class CsvConverter {
         return sb.toString();
     }
 
+    // Десериализация строки в задачу
     public static Task fromString(String value) {
         String[] fields = value.split(",", -1);
         int id = Integer.parseInt(fields[0]);
@@ -66,5 +71,25 @@ public class CsvConverter {
 
     public static String toCsvHeader() {
         return "id,type,name,status,description,epic,startTime,duration";
+    }
+
+    public static String historyToString(HistoryManager manager) {
+        return manager.getHistory().stream()
+                .map(task -> String.valueOf(task.getId()))
+                .collect(Collectors.joining(","));
+    }
+
+    public static List<Integer> historyFromString(String value) {
+        List<Integer> ids = new ArrayList<>();
+        if (value == null || value.isBlank()) return ids;
+
+        String[] tokens = value.split(",");
+        for (String token : tokens) {
+            try {
+                ids.add(Integer.parseInt(token.trim()));
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        return ids;
     }
 }

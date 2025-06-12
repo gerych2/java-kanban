@@ -59,7 +59,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                         nextId = id + 1;
                     }
                 } else {
-                    List<Integer> historyIds = HistoryConverter.fromString(line);
+                    List<Integer> historyIds = CsvConverter.historyFromString(line);
                     for (int historyId : historyIds) {
                         Task task = tasks.get(historyId);
                         if (task == null) task = subtasks.get(historyId);
@@ -100,7 +100,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             }
 
             writer.newLine(); // пустая строка
-            writer.write(HistoryConverter.toString(historyManager));
+            writer.write(CsvConverter.historyToString(historyManager));
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка при сохранении в файл: " + file.getName(), e);
         }
