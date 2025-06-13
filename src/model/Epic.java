@@ -1,33 +1,15 @@
 package model;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Epic extends Task {
-
-    private final List<Integer> subtaskIds = new ArrayList<>();
+    private LocalDateTime endTime;
 
     public Epic(String name, String description) {
         super(name, description, TaskStatus.NEW);
-    }
-
-    public List<Integer> getSubtaskIds() {
-        return subtaskIds;
-    }
-
-    public void addSubtask(Integer subtaskId) {
-        if (subtaskId != null && subtaskId.equals(getId())) {
-            throw new IllegalArgumentException("Эпик не может содержать себя как сабтаск");
-        }
-        subtaskIds.add(subtaskId);
-    }
-
-    public void removeSubtask(Integer subtaskId) {
-        subtaskIds.remove(subtaskId);
-    }
-
-    public void clearSubtasks() {
-        subtaskIds.clear();
+        this.duration = Duration.ZERO;
     }
 
     @Override
@@ -36,13 +18,31 @@ public class Epic extends Task {
     }
 
     @Override
-    public String toString() {
-        return "Epic{" +
-                "name='" + getName() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", id=" + getId() +
-                ", taskStatus=" + getTaskStatus() +
-                ", subtaskIds=" + subtaskIds +
-                '}';
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setTimeFields(LocalDateTime startTime, LocalDateTime endTime, Duration duration) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.duration = duration != null ? duration : Duration.ZERO;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!super.equals(o)) return false;
+        Epic epic = (Epic) o;
+        return Objects.equals(startTime, epic.startTime)
+                && Objects.equals(endTime, epic.endTime)
+                && Objects.equals(duration, epic.duration);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), startTime, endTime, duration);
     }
 }

@@ -1,159 +1,49 @@
 package service;
 
-import org.junit.jupiter.api.BeforeEach;
+import model.*;
 import org.junit.jupiter.api.Test;
-import model.Epic;
-import model.Subtask;
-import model.Task;
-import model.TaskStatus;
-import model.TaskType;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InMemoryTaskManagerTest {
+class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
 
-    private TaskManager taskManager;
-
-    private Task task1;
-
-    private Task task2;
-
-    private Epic epic1;
-
-    private Subtask subtask1;
-
-    private Subtask subtask2;
-
-    @BeforeEach
-    void setUp() {
-        taskManager = new InMemoryTaskManager();
-
-        task1 = new Task("Task 1", "Description 1", TaskStatus.NEW) {
-            @Override
-            public TaskType getType() {
-                return TaskType.TASK;
-            }
-        };
-        task1.setId(1);
-
-        task2 = new Task("Task 2", "Description 2", TaskStatus.NEW) {
-            @Override
-            public TaskType getType() {
-                return TaskType.TASK;
-            }
-        };
-        task2.setId(2);
-
-        epic1 = new Epic("Epic 1", "Description Epic 1");
-        epic1.setId(3);
-
-        subtask1 = new Subtask("Subtask 1", "Description Subtask 1", TaskStatus.NEW, epic1.getId());
-        subtask1.setId(4);
-
-        subtask2 = new Subtask("Subtask 2", "Description Subtask 2", TaskStatus.NEW, epic1.getId());
-        subtask2.setId(5);
-
-        taskManager.addTask(task1);
-        taskManager.addTask(task2);
-        taskManager.addEpic(epic1);
-        taskManager.addSubtask(subtask1);
-        taskManager.addSubtask(subtask2);
+    @Override
+    InMemoryTaskManager createManager() {
+        return new InMemoryTaskManager();
     }
 
     @Test
-    void shouldRemoveTaskFromHistoryWhenDeleted() {
-        taskManager.getTask(task1.getId());
-        taskManager.getTask(task2.getId());
+    void tasksShouldBeSortedByStartTime() {
+        Task t1 = new Task("task1", "desc", TaskStatus.NEW,
+                Duration.ofMinutes(30), LocalDateTime.of(2024, 6, 1, 10, 0));
+        Task t2 = new Task("task2", "desc", TaskStatus.NEW,
+                Duration.ofMinutes(30), LocalDateTime.of(2024, 6, 1, 9, 0));
+        Task t3 = new Task("task3", "desc", TaskStatus.NEW,
+                Duration.ofMinutes(30), LocalDateTime.of(2024, 6, 1, 11, 0));
 
-        taskManager.deleteTask(task1.getId());
+        manager.addTask(t1);
+        manager.addTask(t2);
+        manager.addTask(t3);
 
-        List<Task> history = taskManager.getHistory();
-        assertEquals(1, history.size());
-        assertEquals(task2, history.get(0));
+        List<Task> sorted = manager.getPrioritizedTasks();
+        assertEquals(t2, sorted.get(0));
+        assertEquals(t1, sorted.get(1));
+        assertEquals(t3, sorted.get(2));
     }
 
     @Test
-    void shouldRemoveSubtaskFromHistoryWhenDeleted() {
-        taskManager.getSubtask(subtask1.getId());
-        taskManager.getSubtask(subtask2.getId());
+    void overlappingTasksShouldThrowException() {
+        Task task1 = new Task("T1", "desc", TaskStatus.NEW,
+                Duration.ofMinutes(60), LocalDateTime.of(2024, 6, 1, 10, 0));
+        Task task2 = new Task("T2", "desc", TaskStatus.NEW,
+                Duration.ofMinutes(30), LocalDateTime.of(2024, 6, 1, 10, 30)); // пересекается
 
-        taskManager.deleteSubtask(subtask1.getId());
-
-        List<Task> history = taskManager.getHistory();
-        assertEquals(1, history.size());
-        assertEquals(subtask2, history.get(0));
-    }
-
-    @Test
-    void shouldRemoveEpicAndSubtasksFromHistoryWhenDeleted() {
-        taskManager.getEpic(epic1.getId());
-        taskManager.getSubtask(subtask1.getId());
-
-        taskManager.deleteEpic(epic1.getId());
-
-        List<Task> history = taskManager.getHistory();
-        assertTrue(history.isEmpty());
-    }
-
-    @Test
-    void shouldMaintainTaskOrderInHistory() {
-        taskManager.getTask(task1.getId());
-        taskManager.getTask(task2.getId());
-        taskManager.getTask(task1.getId());
-
-        List<Task> history = taskManager.getHistory();
-        assertEquals(2, history.size());
-        assertEquals(task2, history.get(0));
-        assertEquals(task1, history.get(1));
-    }
-
-    @Test
-    void shouldUpdateTaskStatusInHistory() {
-        taskManager.getTask(task1.getId());
-        task1.setTaskStatus(TaskStatus.IN_PROGRESS);
-        taskManager.updateTask(task1);
-
-        List<Task> history = taskManager.getHistory();
-        assertEquals(TaskStatus.IN_PROGRESS, history.get(0).getTaskStatus());
-    }
-
-    @Test
-    void shouldUpdateSubtaskStatusInHistory() {
-        taskManager.getSubtask(subtask1.getId());
-        subtask1.setTaskStatus(TaskStatus.DONE);
-        taskManager.updateSubtask(subtask1);
-
-        List<Task> history = taskManager.getHistory();
-        assertEquals(TaskStatus.DONE, history.get(0).getTaskStatus());
-    }
-
-    @Test
-    void shouldUpdateEpicStatusInHistory() {
-        taskManager.getEpic(epic1.getId());
-        subtask1.setTaskStatus(TaskStatus.DONE);
-        taskManager.updateSubtask(subtask1);
-
-        List<Task> history = taskManager.getHistory();
-        assertEquals(TaskStatus.IN_PROGRESS, history.get(0).getTaskStatus());
-    }
-
-    @Test
-    void shouldHandleLargeHistory() {
-        for (int i = 0; i < 1000; i++) {
-            Task task = new Task("Task " + i, "Description " + i, TaskStatus.NEW) {
-                @Override
-                public TaskType getType() {
-                    return TaskType.TASK;
-                }
-            };
-            task.setId(i);
-            taskManager.addTask(task);
-            taskManager.getTask(task.getId());
-        }
-
-        List<Task> history = taskManager.getHistory();
-        assertEquals(1000, history.size());
+        manager.addTask(task1);
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> manager.addTask(task2));
+        assertTrue(ex.getMessage().toLowerCase().contains("пересекается"));
     }
 }

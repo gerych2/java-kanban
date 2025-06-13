@@ -1,29 +1,30 @@
 package model;
 
 import org.junit.jupiter.api.Test;
-import model.Epic;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class EpicTest {
 
     @Test
-    void epics_shouldBeEqual_whenIdIsSame() {
-        Epic epic1 = new Epic("Epic1", "Desc1");
-        epic1.setId(1);
-        Epic epic2 = new Epic("Epic2", "Desc2");
-        epic2.setId(1);
+    void equalsAndHashCodeShouldIncludeTimeFields() {
+        Epic epic1 = new Epic("Эпик", "Описание");
+        Epic epic2 = new Epic("Эпик", "Описание");
 
-        assertEquals(epic1, epic2, "Эпики с одинаковым id должны быть равны");
+        assertEquals(epic1, epic2);
+        assertEquals(epic1.hashCode(), epic2.hashCode());
     }
 
     @Test
-    void epic_shouldNotContainItselfAsSubtask() {
-        Epic epic = new Epic("Epic", "Desc");
-        epic.setId(1);
+    void epicFieldsShouldRemainEmptyWithoutManagerUpdate() {
+        Epic epic = new Epic("Эпик", "Описание");
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> epic.addSubtask(1));
-        assertEquals("Эпик не может содержать себя как сабтаск", exception.getMessage());
+        assertEquals(TaskStatus.NEW, epic.getStatus());
+        assertEquals(Duration.ZERO, epic.getDuration());
+        assertNull(epic.getStartTime());
+        assertNull(epic.getEndTime());
     }
-
 }

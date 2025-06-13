@@ -22,7 +22,7 @@ public class Main {
         task2.setId(2);
 
         // Используем CsvConverter
-        System.out.println(CsvConverter.toCsvString(task1));
-        System.out.println(CsvConverter.toCsvString(task2));
+        System.out.println(CsvConverter.toString(task1));
+        System.out.println(CsvConverter.toString(task2));
     }
 }
