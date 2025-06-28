@@ -11,7 +11,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class TasksHandler extends BaseHttpHandler implements HttpHandler {
-
     private final TaskManager manager;
     private final Gson gson;
 
@@ -23,7 +22,6 @@ public class TasksHandler extends BaseHttpHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
-        String path = exchange.getRequestURI().getPath();
         String query = exchange.getRequestURI().getQuery();
 
         try {
@@ -31,8 +29,7 @@ public class TasksHandler extends BaseHttpHandler implements HttpHandler {
                 case "GET" -> {
                     if (query == null) {
                         List<Task> tasks = manager.getTasks();
-                        String response = gson.toJson(tasks);
-                        sendText(exchange, response, 200);
+                        sendText(exchange, gson.toJson(tasks), 200);
                     } else {
                         int id = parseId(query);
                         Task task = manager.getTask(id);
@@ -46,19 +43,11 @@ public class TasksHandler extends BaseHttpHandler implements HttpHandler {
                 case "POST" -> {
                     Task task = gson.fromJson(new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8), Task.class);
                     if (task.getId() == 0) {
-                        try {
-                            manager.addTask(task);
-                            sendText(exchange, "Task added", 201);
-                        } catch (IllegalArgumentException e) {
-                            sendConflict(exchange, e.getMessage());
-                        }
+                        manager.addTask(task);
+                        sendText(exchange, "Task added", 201);
                     } else {
-                        try {
-                            manager.updateTask(task);
-                            sendText(exchange, "Task updated", 201);
-                        } catch (IllegalArgumentException e) {
-                            sendConflict(exchange, e.getMessage());
-                        }
+                        manager.updateTask(task);
+                        sendText(exchange, "Task updated", 201);
                     }
                 }
                 case "DELETE" -> {

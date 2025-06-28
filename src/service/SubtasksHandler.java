@@ -13,6 +13,7 @@ import java.util.List;
 public class SubtasksHandler extends BaseHttpHandler implements HttpHandler {
 
     private final TaskManager manager;
+
     private final Gson gson;
 
     public SubtasksHandler(TaskManager manager, Gson gson) {

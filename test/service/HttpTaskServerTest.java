@@ -10,13 +10,19 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class HttpTaskServerTest {
 
     private static HttpTaskServer server;
-    private static final Gson gson = new GsonBuilder().create();
+
+    private static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(Duration.class, new DurationAdapter())
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+            .create();
 
     @BeforeAll
     static void startServer() throws IOException {
@@ -31,12 +37,12 @@ class HttpTaskServerTest {
 
     @Test
     void shouldAddAndReturnTask() throws IOException {
-        // Arrange: создаём задачу
-        Task task = new Task("Test", "Description", TaskStatus.NEW);
+        Task task = new Task("Test", "Description", TaskStatus.NEW,
+                Duration.ofMinutes(10), LocalDateTime.now());
         String json = gson.toJson(task);
 
-        // Act: отправляем POST-запрос
-        HttpURLConnection connection = (HttpURLConnection) new URL("http://localhost:8080/tasks").openConnection();
+        HttpURLConnection connection = (HttpURLConnection)
+                new URL("http://localhost:8080/tasks").openConnection();
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
         connection.setRequestProperty("Content-Type", "application/json");
@@ -47,8 +53,8 @@ class HttpTaskServerTest {
 
         assertEquals(201, connection.getResponseCode());
 
-        // Проверка: GET-запрос для получения всех задач
-        HttpURLConnection getConn = (HttpURLConnection) new URL("http://localhost:8080/tasks").openConnection();
+        HttpURLConnection getConn = (HttpURLConnection)
+                new URL("http://localhost:8080/tasks").openConnection();
         getConn.setRequestMethod("GET");
 
         assertEquals(200, getConn.getResponseCode());

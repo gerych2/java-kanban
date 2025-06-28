@@ -25,7 +25,10 @@ public class HttpTaskManagerTasksTest {
     public void setUp() throws IOException {
         manager = new InMemoryTaskManager();
         taskServer = new HttpTaskServer(manager);
-        gson = new GsonBuilder().create();
+        gson = new GsonBuilder()
+                .registerTypeAdapter(Duration.class, new DurationAdapter())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                .create();
 
         taskServer.start();
         manager.removeAllTasks();
@@ -40,13 +43,11 @@ public class HttpTaskManagerTasksTest {
 
     @Test
     public void testAddTask() throws IOException, InterruptedException {
-        // Создаём задачу
         Task task = new Task("Test 2", "Testing task 2",
                 TaskStatus.NEW, Duration.ofMinutes(5), LocalDateTime.now());
 
         String json = gson.toJson(task);
 
-        // Отправляем POST-запрос
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/tasks"))
@@ -56,10 +57,8 @@ public class HttpTaskManagerTasksTest {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // Проверка ответа
         assertEquals(201, response.statusCode());
 
-        // Проверка содержимого менеджера
         List<Task> tasks = manager.getTasks();
         assertEquals(1, tasks.size());
         assertEquals("Test 2", tasks.get(0).getName());

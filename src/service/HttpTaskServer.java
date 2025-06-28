@@ -3,26 +3,34 @@ package service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpServer;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class HttpTaskServer {
+
     private static final int PORT = 8080;
+
     private final HttpServer server;
+
     private final TaskManager manager;
-    private static final Gson gson = new GsonBuilder().create();
+
+    private static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(Duration.class, new DurationAdapter())
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+            .create();
 
     public HttpTaskServer(TaskManager manager) throws IOException {
         this.manager = manager;
         this.server = HttpServer.create(new InetSocketAddress(PORT), 0);
 
-        // Примеры подключения обработчиков:
         server.createContext("/tasks", new TasksHandler(manager, gson));
         server.createContext("/epics", new EpicsHandler(manager, gson));
         server.createContext("/subtasks", new SubtasksHandler(manager, gson));
         server.createContext("/history", new HistoryHandler(manager, gson));
         server.createContext("/prioritized", new PrioritizedHandler(manager, gson));
-
     }
 
     public void start() {

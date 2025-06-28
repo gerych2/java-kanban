@@ -13,6 +13,7 @@ import java.util.List;
 public class EpicsHandler extends BaseHttpHandler implements HttpHandler {
 
     private final TaskManager manager;
+
     private final Gson gson;
 
     public EpicsHandler(TaskManager manager, Gson gson) {
