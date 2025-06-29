@@ -28,40 +28,9 @@ public class EpicsHandler extends BaseHttpHandler implements HttpHandler {
 
         try {
             switch (method) {
-                case "GET" -> {
-                    if (query == null) {
-                        List<Epic> epics = manager.getEpics();
-                        sendText(exchange, gson.toJson(epics), 200);
-                    } else {
-                        int id = parseId(query);
-                        Epic epic = manager.getEpic(id);
-                        if (epic != null) {
-                            sendText(exchange, gson.toJson(epic), 200);
-                        } else {
-                            sendNotFound(exchange, "Epic not found");
-                        }
-                    }
-                }
-                case "POST" -> {
-                    Epic epic = gson.fromJson(new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8), Epic.class);
-                    if (epic.getId() == 0) {
-                        manager.addEpic(epic);
-                        sendText(exchange, "Epic added", 201);
-                    } else {
-                        manager.updateEpic(epic);
-                        sendText(exchange, "Epic updated", 201);
-                    }
-                }
-                case "DELETE" -> {
-                    if (query == null) {
-                        manager.removeAllEpics();
-                        sendText(exchange, "All epics removed", 200);
-                    } else {
-                        int id = parseId(query);
-                        manager.deleteEpic(id);
-                        sendText(exchange, "Epic deleted", 200);
-                    }
-                }
+                case "GET" -> handleGet(exchange, query);
+                case "POST" -> handlePost(exchange);
+                case "DELETE" -> handleDelete(exchange, query);
                 default -> sendNotFound(exchange, "Unsupported method");
             }
         } catch (Exception e) {
@@ -69,7 +38,48 @@ public class EpicsHandler extends BaseHttpHandler implements HttpHandler {
         }
     }
 
-    private int parseId(String query) {
-        return Integer.parseInt(query.replaceFirst("id=", ""));
+    private void handleGet(HttpExchange exchange, String query) throws IOException {
+        if (query == null) {
+            getAllEpics(exchange);
+        } else {
+            getEpicById(exchange, query);
+        }
+    }
+
+    private void handlePost(HttpExchange exchange) throws IOException {
+        Epic epic = gson.fromJson(new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8), Epic.class);
+        if (epic.getId() == 0) {
+            manager.addEpic(epic);
+            sendText(exchange, "Epic added", 201);
+        } else {
+            manager.updateEpic(epic);
+            sendText(exchange, "Epic updated", 201);
+        }
+    }
+
+    private void handleDelete(HttpExchange exchange, String query) throws IOException {
+        if (query == null) {
+            manager.removeAllEpics();
+            sendText(exchange, "All epics removed", 200);
+        } else {
+            int id = parseId(query);
+            manager.deleteEpic(id);
+            sendText(exchange, "Epic deleted", 200);
+        }
+    }
+
+    private void getAllEpics(HttpExchange exchange) throws IOException {
+        List<Epic> epics = manager.getEpics();
+        sendText(exchange, gson.toJson(epics), 200);
+    }
+
+    private void getEpicById(HttpExchange exchange, String query) throws IOException {
+        int id = parseId(query);
+        Epic epic = manager.getEpic(id);
+        if (epic != null) {
+            sendText(exchange, gson.toJson(epic), 200);
+        } else {
+            sendNotFound(exchange, "Epic not found");
+        }
     }
 }

@@ -6,15 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="5ae1de76-46a8-4588-b068-4d04be9aa3a4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/DurationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/BaseHttpHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/BaseHttpHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/EpicsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/EpicsHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/HistoryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/HistoryHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/HttpTaskServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/HttpTaskServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/PrioritizedHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/PrioritizedHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/SubtasksHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/SubtasksHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/TasksHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/TasksHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/service/HttpTaskManagerTasksTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/service/HttpTaskManagerTasksTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/service/HttpTaskServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/service/HttpTaskServerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +145,7 @@
       <workItem from="1750596489069" duration="25000" />
       <workItem from="1750922636207" duration="60000" />
       <workItem from="1750922864759" duration="3935000" />
-      <workItem from="1750926958634" duration="2575000" />
+      <workItem from="1750926958634" duration="4484000" />
     </task>
     <servers />
   </component>

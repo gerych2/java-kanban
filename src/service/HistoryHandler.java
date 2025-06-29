@@ -22,14 +22,19 @@ public class HistoryHandler extends BaseHttpHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {
-            if ("GET".equals(exchange.getRequestMethod())) {
-                List<Task> history = manager.getHistory();
-                sendText(exchange, gson.toJson(history), 200);
-            } else {
-                sendNotFound(exchange, "Only GET is supported for /history");
+            String method = exchange.getRequestMethod();
+
+            switch (method) {
+                case "GET" -> handleGet(exchange);
+                default -> sendNotFound(exchange, "Unsupported method");
             }
         } catch (Exception e) {
             sendServerError(exchange, "Internal server error: " + e.getMessage());
         }
+    }
+
+    private void handleGet(HttpExchange exchange) throws IOException {
+        List<Task> history = manager.getHistory();
+        sendText(exchange, gson.toJson(history), 200);
     }
 }

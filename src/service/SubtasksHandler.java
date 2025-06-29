@@ -28,48 +28,9 @@ public class SubtasksHandler extends BaseHttpHandler implements HttpHandler {
 
         try {
             switch (method) {
-                case "GET" -> {
-                    if (query == null) {
-                        List<Subtask> subtasks = manager.getSubtasks();
-                        sendText(exchange, gson.toJson(subtasks), 200);
-                    } else {
-                        int id = parseId(query);
-                        Subtask subtask = manager.getSubtask(id);
-                        if (subtask != null) {
-                            sendText(exchange, gson.toJson(subtask), 200);
-                        } else {
-                            sendNotFound(exchange, "Subtask not found");
-                        }
-                    }
-                }
-                case "POST" -> {
-                    Subtask subtask = gson.fromJson(new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8), Subtask.class);
-                    if (subtask.getId() == 0) {
-                        try {
-                            manager.addSubtask(subtask);
-                            sendText(exchange, "Subtask added", 201);
-                        } catch (IllegalArgumentException e) {
-                            sendConflict(exchange, e.getMessage());
-                        }
-                    } else {
-                        try {
-                            manager.updateSubtask(subtask);
-                            sendText(exchange, "Subtask updated", 201);
-                        } catch (IllegalArgumentException e) {
-                            sendConflict(exchange, e.getMessage());
-                        }
-                    }
-                }
-                case "DELETE" -> {
-                    if (query == null) {
-                        manager.removeAllSubtasks();
-                        sendText(exchange, "All subtasks removed", 200);
-                    } else {
-                        int id = parseId(query);
-                        manager.deleteSubtask(id);
-                        sendText(exchange, "Subtask deleted", 200);
-                    }
-                }
+                case "GET" -> handleGet(exchange, query);
+                case "POST" -> handlePost(exchange);
+                case "DELETE" -> handleDelete(exchange, query);
                 default -> sendNotFound(exchange, "Unsupported method");
             }
         } catch (Exception e) {
@@ -77,7 +38,49 @@ public class SubtasksHandler extends BaseHttpHandler implements HttpHandler {
         }
     }
 
-    private int parseId(String query) {
-        return Integer.parseInt(query.replaceFirst("id=", ""));
+    private void handleGet(HttpExchange exchange, String query) throws IOException {
+        if (query == null) {
+            getAllSubtasks(exchange);
+        } else {
+            getSubtaskById(exchange, query);
+        }
+    }
+
+    private void handlePost(HttpExchange exchange) throws IOException {
+        Subtask subtask = gson.fromJson(
+                new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8), Subtask.class);
+        if (subtask.getId() == 0) {
+            manager.addSubtask(subtask);
+            sendText(exchange, "Subtask added", 201);
+        } else {
+            manager.updateSubtask(subtask);
+            sendText(exchange, "Subtask updated", 201);
+        }
+    }
+
+    private void handleDelete(HttpExchange exchange, String query) throws IOException {
+        if (query == null) {
+            manager.removeAllSubtasks();
+            sendText(exchange, "All subtasks removed", 200);
+        } else {
+            int id = parseId(query);
+            manager.deleteSubtask(id);
+            sendText(exchange, "Subtask deleted", 200);
+        }
+    }
+
+    private void getAllSubtasks(HttpExchange exchange) throws IOException {
+        List<Subtask> subtasks = manager.getSubtasks();
+        sendText(exchange, gson.toJson(subtasks), 200);
+    }
+
+    private void getSubtaskById(HttpExchange exchange, String query) throws IOException {
+        int id = parseId(query);
+        Subtask subtask = manager.getSubtask(id);
+        if (subtask != null) {
+            sendText(exchange, gson.toJson(subtask), 200);
+        } else {
+            sendNotFound(exchange, "Subtask not found");
+        }
     }
 }
